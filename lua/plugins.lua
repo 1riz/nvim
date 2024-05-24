@@ -27,6 +27,7 @@ require("lazy").setup({
   "windwp/nvim-autopairs",
   "kylechui/nvim-surround",
   "mfussenegger/nvim-dap",
+  "theHamsta/nvim-dap-virtual-text",
   "nvimtools/none-ls.nvim",
   "folke/trouble.nvim",
   "lewis6991/gitsigns.nvim",
@@ -44,9 +45,6 @@ require("lazy").setup({
 
 -- Nightfox theme
 -- https://github.com/EdenEast/nightfox.nvim
-require("nightfox").setup({
-  palettes = { nightfox = { bg1 = "#161616", bg3 = "#192330" } },
-})
 vim.cmd("colorscheme nightfox")
 
 -- Lualine plugin
@@ -97,7 +95,7 @@ require("session_manager").setup({
 -- Project plugin
 -- https://github.com/ahmedkhalf/project.nvim
 require("project_nvim").setup({
-  patterns = { ".git", "Makefile", "Cargo.toml", "composer.json" },
+  patterns = { ".git" },
 })
 
 -- Yanky plugin
@@ -281,21 +279,28 @@ require("Comment").setup()
 -- Nvim-dap plugin
 -- https://github.com/mfussenegger/nvim-dap
 local dap = require("dap")
-dap.adapters.cppdbg = {
-  id = "cppdbg",
+dap.adapters.gdb = {
   type = "executable",
-  command = "/opt/vscode/extension/debugAdapters/bin/OpenDebugAD7",
+  command = "gdb",
+  args = { "-i", "dap" },
 }
 dap.configurations.c = {
   {
     name = "GDB Local session",
-    type = "cppdbg",
+    type = "gdb",
     request = "launch",
     program = function() return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file") end,
     cwd = "${workspaceFolder}",
-    stopAtEntry = true,
+    stopAtBeginningOfMainSubprogram = true,
   },
 }
+
+-- Nvim-dap-virtual-text plugin
+-- https://github.com/theHamsta/nvim-dap-virtual-text
+require("nvim-dap-virtual-text").setup({
+  commented = true,
+  all_frames = true,
+})
 
 -- None-ls plugin
 -- https://github.com/nvimtools/none-ls.nvim

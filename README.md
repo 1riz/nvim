@@ -31,6 +31,7 @@ minimalist Neovim config (< 500 lines).
 - https://github.com/neovim/nvim-lspconfig
 - https://github.com/nvimtools/none-ls.nvim
 - https://github.com/mfussenegger/nvim-dap
+- https://github.com/theHamsta/nvim-dap-virtual-text
 - https://github.com/folke/trouble.nvim
 - https://github.com/L3MON4D3/LuaSnip
 - https://github.com/honza/vim-snippets
