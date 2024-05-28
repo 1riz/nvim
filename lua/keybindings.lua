@@ -96,15 +96,21 @@ wk.register({
 }, { prefix = "<leader>" })
 
 wk.register({
+  ["<C-h>"] = { function() vim.lsp.buf.hover() end, "Display symbol information" },
+})
+
+wk.register({
   c = {
     name = "coding",
     c = { function() vim.lsp.buf.code_action() end, "Execute code actions" },
     h = { function() vim.lsp.buf.hover() end, "Display symbol information" },
     f = { function() vim.lsp.buf.format() end, "Format current buffer" },
     r = { function() vim.lsp.buf.references() end, "List symbol references" },
-    i = { function() vim.lsp.buf.implementation() end, "Lists symbol implementations" },
+    i = { function() vim.lsp.buf.implementation() end, "List symbol implementations" },
+    d = { function() vim.lsp.buf.definition() end, "Jump to the definition of the symbol" },
+    t = { function() vim.lsp.buf.type_definition() end, "Jump to the definition of the type of the symbol" },
     n = { function() vim.lsp.buf.rename() end, "Rename symbol in current buffer" },
-    t = { function() telescope_builtin.treesitter() end, "Search syntax tree symbols" },
+    s = { function() telescope_builtin.treesitter() end, "Search syntax tree symbols" },
   },
 }, { prefix = "<leader>" })
 

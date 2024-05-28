@@ -8,6 +8,7 @@ vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.shada = "!,'100,<50,s10,h"
 
 -- UI
+vim.opt.title = true
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.list = true

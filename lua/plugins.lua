@@ -7,7 +7,8 @@
 vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 
 require("lazy").setup({
-  "EdenEast/nightfox.nvim",
+  "catppuccin/nvim",
+  "nvim-tree/nvim-web-devicons",
   "nvim-lua/plenary.nvim",
   "nvim-lualine/lualine.nvim",
   "folke/which-key.nvim",
@@ -43,18 +44,30 @@ require("lazy").setup({
   "ThePrimeagen/harpoon",
 })
 
--- Nightfox theme
--- https://github.com/EdenEast/nightfox.nvim
-vim.cmd("colorscheme nightfox")
+-- Catppuccin theme
+-- https://github.com/catppuccin/nvim
+require("catppuccin").setup({
+  flavour = "mocha",
+  transparent_background = true,
+  default_integrations = true,
+  integrations = {
+    dap = true,
+    harpoon = true,
+    lsp_trouble = true,
+    which_key = true,
+  },
+})
+vim.cmd("colorscheme catppuccin")
+
+-- Nvim-web-devicons plugin
+-- https://github.com/nvim-tree/nvim-web-devicons
+require("nvim-web-devicons").setup()
 
 -- Lualine plugin
 -- https://github.com/nvim-lualine/lualine.nvim
 require("lualine").setup({
   options = {
-    icons_enabled = false,
-    theme = "nightfox",
-    component_separators = { left = "", right = "|" },
-    section_separators = { left = "", right = "" },
+    theme = "catppuccin",
   },
   sections = {
     lualine_a = { {
@@ -64,7 +77,7 @@ require("lualine").setup({
     lualine_x = {
       { function() return string.gsub(vim.fn.getcwd(), "^(.+)/(.+)$", "%2") end },
       "encoding",
-      "fileformat",
+      { "fileformat", icons_enabled = false },
       "filetype",
     },
   },
@@ -171,7 +184,6 @@ telescope.setup({
       hijack_netrw = true,
     },
     ["frecency"] = {
-      disable_devicons = true,
       show_scores = true,
     },
   },
@@ -229,6 +241,11 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- Lspconfig plugin
 -- https://github.com/neovim/nvim-lspconfig
 local lspconfig = require("lspconfig")
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 -- LuaSnip plugin
 -- https://github.com/L3MON4D3/LuaSnip
@@ -294,6 +311,12 @@ dap.configurations.c = {
     stopAtBeginningOfMainSubprogram = true,
   },
 }
+local sign = vim.fn.sign_define
+sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
+sign("DapBreakpointRejected", { text = "", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
+sign("DapStopped", { text = "", texthl = "DapLogPoint", linehl = "", numhl = "" })
 
 -- Nvim-dap-virtual-text plugin
 -- https://github.com/theHamsta/nvim-dap-virtual-text
@@ -319,19 +342,7 @@ null_ls.setup({
 
 -- Trouble plugin
 -- https://github.com/folke/trouble.nvim
-require("trouble").setup({
-  icons = false,
-  fold_open = "v",
-  fold_closed = ">",
-  indent_lines = false,
-  signs = {
-    error = "error",
-    warning = "warn",
-    hint = "hint",
-    information = "info",
-  },
-  use_diagnostic_signs = false,
-})
+require("trouble").setup()
 
 -- Gitsigns plugin
 -- https://github.com/lewis6991/gitsigns.nvim
@@ -354,7 +365,6 @@ require("hlsearch").setup()
 -- Spectre plugin
 -- https://github.com/nvim-pack/nvim-spectre
 require("spectre").setup({
-  color_devicons = false,
   open_cmd = "bo 25new",
   highlight = { headers = "EndOfBuffer" },
   mapping = {
@@ -373,16 +383,15 @@ require("spectre").setup({
 -- https://github.com/goolord/alpha-nvim
 local alpha = require("alpha")
 local alpha_theme = require("alpha.themes.startify")
-alpha_theme.nvim_web_devicons.enabled = false
 alpha_theme.section.header.val = require("logo")
 alpha_theme.section.top_buttons.val = {
-  alpha_theme.button("n", ">  New file", "<cmd>enew<cr>"),
-  alpha_theme.button("f", ">  Find files", "<cmd>Telescope find_files<cr>"),
-  alpha_theme.button("p", ">  Open project", "<cmd>Telescope projects<cr>"),
-  alpha_theme.button("s", ">  Load saved session", "<cmd>SessionManager! load_session<cr>"),
+  alpha_theme.button("n", "  New file", "<cmd>enew<cr>"),
+  alpha_theme.button("f", "󰈞  Find files", "<cmd>Telescope find_files<cr>"),
+  alpha_theme.button("p", "  Open project", "<cmd>Telescope projects<cr>"),
+  alpha_theme.button("s", "  Load saved session", "<cmd>SessionManager! load_session<cr>"),
 }
 alpha_theme.section.bottom_buttons.val = {
-  alpha_theme.button("q", ">  Exit", "<cmd>qa<cr>"),
+  alpha_theme.button("q", "󰿅  Exit", "<cmd>qa<cr>"),
 }
 local version = vim.version()
 local nvim_version = "NVIM v" .. version.major .. "." .. version.minor .. "." .. version.patch
