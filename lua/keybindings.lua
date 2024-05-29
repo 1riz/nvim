@@ -9,6 +9,7 @@ local harpoon_mark = require("harpoon.mark")
 local harpoon_ui = require("harpoon.ui")
 local lazy = require("lazy")
 local luasnip = require("luasnip")
+local ntree = require("nvim-tree.api")
 local session_manager = require("session_manager")
 local spectre = require("spectre")
 local substitute = require("substitute")
@@ -83,6 +84,7 @@ wk.register({
   g = { function() telescope_builtin.live_grep() end, "Search string in files" },
   h = { function() telescope.extensions.harpoon.marks() end, "Show currents marks" },
   t = { function() telescope_builtin.help_tags() end, "Show help tags" },
+  d = { function() ntree.tree.toggle() end, "Explore directories" },
   ["<space>"] = { function() telescope_builtin.builtin() end, "Show all pickers" },
 }, { prefix = "<space>" })
 

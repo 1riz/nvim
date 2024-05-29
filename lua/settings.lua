@@ -3,6 +3,8 @@
 --
 
 -- General
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.opt.grepprg = "rg -uuu --glob '!**/.git/*' --vimgrep"
 vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.shada = "!,'100,<50,s10,h"
@@ -21,6 +23,7 @@ vim.opt.timeoutlen = 500
 vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.sessionoptions = "buffers,curdir"
+vim.opt.termguicolors = true
 
 -- Formatting
 vim.opt.wrap = false

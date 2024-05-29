@@ -9,6 +9,7 @@ vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 require("lazy").setup({
   "catppuccin/nvim",
   "nvim-tree/nvim-web-devicons",
+  "nvim-tree/nvim-tree.lua",
   "nvim-lua/plenary.nvim",
   "nvim-lualine/lualine.nvim",
   "folke/which-key.nvim",
@@ -48,7 +49,7 @@ require("lazy").setup({
 -- https://github.com/catppuccin/nvim
 require("catppuccin").setup({
   flavour = "mocha",
-  transparent_background = true,
+  transparent_background = false,
   default_integrations = true,
   integrations = {
     dap = true,
@@ -62,6 +63,21 @@ vim.cmd("colorscheme catppuccin")
 -- Nvim-web-devicons plugin
 -- https://github.com/nvim-tree/nvim-web-devicons
 require("nvim-web-devicons").setup()
+
+-- Nvim-tree plugin
+-- https://github.com/nvim-tree/nvim-tree.lua
+require("nvim-tree").setup({
+  view = {
+    width = 35,
+  },
+  renderer = {
+    root_folder_label = ":~:$?",
+  },
+  filters = {
+    git_ignored = false,
+    dotfiles = false,
+  },
+})
 
 -- Lualine plugin
 -- https://github.com/nvim-lualine/lualine.nvim
@@ -275,7 +291,12 @@ lspconfig.bashls.setup({ capabilities = capabilities })
 lspconfig.lua_ls.setup({ capabilities = capabilities })
 lspconfig.clangd.setup({ capabilities = capabilities })
 lspconfig.rust_analyzer.setup({ capabilities = capabilities })
-lspconfig.intelephense.setup({ capabilities = capabilities })
+lspconfig.intelephense.setup({
+  capabilities = capabilities,
+  root_dir = function() return vim.loop.cwd() end,
+  init_options = { globalStoragePath = "~/.local/share/intelephense", licenseKey = "XXXXXXXXXXXXXXX" },
+  settings = { intelephense = { files = { maxSize = 10000000 } } },
+})
 
 -- Autopairs plugin
 -- https://github.com/windwp/nvim-autopairs
@@ -314,9 +335,9 @@ dap.configurations.c = {
 local sign = vim.fn.sign_define
 sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
 sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
-sign("DapBreakpointRejected", { text = "", texthl = "DapBreakpoint", linehl = "", numhl = "" })
-sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
-sign("DapStopped", { text = "", texthl = "DapLogPoint", linehl = "", numhl = "" })
+sign("DapBreakpointRejected", { text = "x", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+sign("DapLogPoint", { text = "", texthl = "DapLogPoint", linehl = "", numhl = "" })
+sign("DapStopped", { text = "", texthl = "DapLogPoint", linehl = "", numhl = "" })
 
 -- Nvim-dap-virtual-text plugin
 -- https://github.com/theHamsta/nvim-dap-virtual-text

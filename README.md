@@ -10,8 +10,9 @@ minimalist Neovim config (< 500 lines).
 ## Plugins
 
 - https://github.com/folke/lazy.nvim
-- https://github.com/nvim-tree/nvim-web-devicons
 - https://github.com/nvim-lualine/lualine.nvim
+- https://github.com/nvim-tree/nvim-tree.lua
+- https://github.com/nvim-tree/nvim-web-devicons
 - https://github.com/nvim-telescope/telescope.nvim
 - https://github.com/nvim-telescope/telescope-ui-select.nvim
 - https://github.com/nvim-telescope/telescope-file-browser.nvim
