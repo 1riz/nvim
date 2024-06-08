@@ -23,6 +23,7 @@ vim.opt.timeoutlen = 500
 vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.sessionoptions = "buffers,curdir"
+vim.opt.mousemodel = "extend"
 vim.opt.termguicolors = true
 
 -- Formatting

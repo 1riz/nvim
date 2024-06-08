@@ -7,7 +7,7 @@
 vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 
 require("lazy").setup({
-  "catppuccin/nvim",
+  { "catppuccin/nvim", lazy = false, priority = 1000 },
   "nvim-tree/nvim-web-devicons",
   "nvim-tree/nvim-tree.lua",
   "nvim-lua/plenary.nvim",
@@ -49,7 +49,7 @@ require("lazy").setup({
 -- https://github.com/catppuccin/nvim
 require("catppuccin").setup({
   flavour = "mocha",
-  transparent_background = false,
+  transparent_background = true,
   default_integrations = true,
   integrations = {
     dap = true,
@@ -67,6 +67,10 @@ require("nvim-web-devicons").setup()
 -- Nvim-tree plugin
 -- https://github.com/nvim-tree/nvim-tree.lua
 require("nvim-tree").setup({
+  hijack_cursor = true,
+  hijack_netrw = false,
+  sync_root_with_cwd = true,
+  select_prompts = true,
   view = {
     width = 35,
   },
@@ -294,7 +298,7 @@ lspconfig.rust_analyzer.setup({ capabilities = capabilities })
 lspconfig.intelephense.setup({
   capabilities = capabilities,
   root_dir = function() return vim.loop.cwd() end,
-  init_options = { globalStoragePath = "~/.local/share/intelephense", licenseKey = "XXXXXXXXXXXXXXX" },
+  init_options = { globalStoragePath = "/tmp/intelephense", licenseKey = "XXXXXXXXXXXXXXX" },
   settings = { intelephense = { files = { maxSize = 10000000 } } },
 })
 

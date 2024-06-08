@@ -2,6 +2,7 @@
 -- NVIM Key bindings
 --
 
+local catppuccin = require("catppuccin")
 local dap = require("dap")
 local dap_widgets = require("dap.ui.widgets")
 local gitsigns = require("gitsigns")
@@ -66,10 +67,6 @@ wk.register({
   ["<M-h>"] = { function() harpoon_ui.toggle_quick_menu() end, "View all project marks" },
   ["<M-Right>"] = { function() harpoon_ui.nav_next() end, "Navigates to next mark" },
   ["<M-Left>"] = { function() harpoon_ui.nav_prev() end, "Navigates to previous mark" },
-})
-
-wk.register({
-  ["<C-space>"] = { function() telescope_builtin.find_files() end, "Find files" },
 })
 
 wk.register({
@@ -180,5 +177,20 @@ wk.register({
     name = "plugins",
     l = { function() lazy.home() end, "Got to plugins list" },
     u = { function() lazy.update() end, "Update plugins" },
+  },
+}, { prefix = "<leader>" })
+
+wk.register({
+  t = {
+    name = "themes",
+    t = {
+      function()
+        catppuccin.options.transparent_background = not catppuccin.options.transparent_background
+        catppuccin.compile()
+        vim.cmd.colorscheme(vim.g.colors_name)
+        vim.opt.showtabline = 0
+      end,
+      "Toggle between transparent background",
+    },
   },
 }, { prefix = "<leader>" })
