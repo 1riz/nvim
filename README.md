@@ -47,7 +47,7 @@ minimalist Neovim config (< 500 lines).
 
 ## Theme
 
-- https://github.com/catppuccin/nvim
+- https://github.com/projekt0n/github-nvim-theme
 
 ## Installation
 
@@ -103,7 +103,7 @@ nvim .config/nvim/.luarc.json
 
 **C**
 - gdb
-- clang-format
+- astyle
 - clangd
 
 **Rust**

@@ -7,7 +7,7 @@
 vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 
 require("lazy").setup({
-  { "catppuccin/nvim", lazy = false, priority = 1000 },
+  "projekt0n/github-nvim-theme",
   "nvim-tree/nvim-web-devicons",
   "nvim-tree/nvim-tree.lua",
   "nvim-lua/plenary.nvim",
@@ -45,20 +45,17 @@ require("lazy").setup({
   "ThePrimeagen/harpoon",
 })
 
--- Catppuccin theme
--- https://github.com/catppuccin/nvim
-require("catppuccin").setup({
-  flavour = "mocha",
-  transparent_background = true,
-  default_integrations = true,
-  integrations = {
-    dap = true,
-    harpoon = true,
-    lsp_trouble = true,
-    which_key = true,
+-- GitHub theme
+-- https://github.com/projekt0n/github-nvim-theme
+local github_theme_groups = {
+  github_dark_default = {
+    CursorLine = { bg = "#222222" },
   },
+}
+require("github-theme").setup({
+  groups = github_theme_groups,
 })
-vim.cmd("colorscheme catppuccin")
+vim.cmd("colorscheme github_dark_default")
 
 -- Nvim-web-devicons plugin
 -- https://github.com/nvim-tree/nvim-web-devicons
@@ -85,9 +82,18 @@ require("nvim-tree").setup({
 
 -- Lualine plugin
 -- https://github.com/nvim-lualine/lualine.nvim
+-- https://github.com/nvim-lualine/lualine.nvim/blob/master/lua/lualine/themes/powerline.lua
+local lualine_custom_theme = require("lualine.themes.powerline")
+lualine_custom_theme.insert.a.bg = "#005f87"
+lualine_custom_theme.insert.a.fg = "#87dfff"
+lualine_custom_theme.insert.b = lualine_custom_theme.normal.b
+lualine_custom_theme.insert.c = lualine_custom_theme.normal.c
 require("lualine").setup({
   options = {
-    theme = "catppuccin",
+    theme = lualine_custom_theme,
+    icons_enabled = false,
+    component_separators = { left = "", right = "|" },
+    section_separators = { left = "", right = "" },
   },
   sections = {
     lualine_a = { {
@@ -97,7 +103,7 @@ require("lualine").setup({
     lualine_x = {
       { function() return string.gsub(vim.fn.getcwd(), "^(.+)/(.+)$", "%2") end },
       "encoding",
-      { "fileformat", icons_enabled = false },
+      "fileformat",
       "filetype",
     },
   },
@@ -353,12 +359,14 @@ require("nvim-dap-virtual-text").setup({
 -- None-ls plugin
 -- https://github.com/nvimtools/none-ls.nvim
 local null_ls = require("null-ls")
-local clang_format_args = "--style=file:" .. vim.fn.stdpath("config") .. "/.clang-format"
 null_ls.setup({
   sources = {
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.shfmt.with({ extra_args = { "-i", "2", "-ci", "-sr" } }),
-    null_ls.builtins.formatting.clang_format.with({ extra_args = { clang_format_args } }),
+    null_ls.builtins.formatting.astyle.with({
+      extra_args = { "--options=" .. vim.fn.stdpath("config") .. "/.astylerc" },
+      filetypes = { "c" },
+    }),
     null_ls.builtins.formatting.rustfmt.with({ extra_args = { "--edition", "2021" } }),
     null_ls.builtins.formatting.phpcsfixer.with({ extra_args = { "--rules=@PSR12" } }),
     null_ls.builtins.diagnostics.phpcs.with({ extra_args = { "--standard=PSR12" } }),
@@ -367,7 +375,13 @@ null_ls.setup({
 
 -- Trouble plugin
 -- https://github.com/folke/trouble.nvim
-require("trouble").setup()
+require("trouble").setup({
+  modes = {
+    symbols = {
+      win = { position = "right", size = { width = 40 } },
+    },
+  },
+})
 
 -- Gitsigns plugin
 -- https://github.com/lewis6991/gitsigns.nvim

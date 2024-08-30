@@ -1,8 +1,0 @@
-BasedOnStyle: LLVM
-IndentWidth: 4
-UseTab: Never
-BreakBeforeBraces: Linux
-InsertBraces: true
-IndentCaseLabels: false
-ColumnLimit: 0
-AllowShortFunctionsOnASingleLine: Empty

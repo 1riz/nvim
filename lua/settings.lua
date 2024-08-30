@@ -33,8 +33,25 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-  pattern = { "*.c", "*.php" },
+  pattern = { "*.c", "*.h" },
   callback = function()
+    vim.opt.filetype = "c"
+    vim.opt.tabstop = 4
+    vim.opt.shiftwidth = 4
+  end,
+})
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = { "*.s", "*.asm" },
+  callback = function()
+    vim.opt.filetype = "asm"
+    vim.opt.tabstop = 8
+    vim.opt.shiftwidth = 8
+  end,
+})
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = { "*.php" },
+  callback = function()
+    vim.opt.filetype = "php"
     vim.opt.tabstop = 4
     vim.opt.shiftwidth = 4
   end,

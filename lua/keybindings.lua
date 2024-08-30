@@ -2,7 +2,6 @@
 -- NVIM Key bindings
 --
 
-local catppuccin = require("catppuccin")
 local dap = require("dap")
 local dap_widgets = require("dap.ui.widgets")
 local gitsigns = require("gitsigns")
@@ -22,6 +21,12 @@ local trouble = require("trouble")
 -- WhichKey plugin
 -- https://github.com/folke/which-key.nvim
 local wk = require("which-key")
+wk.setup({
+  notify = false,
+  icons = {
+    mappings = false,
+  },
+})
 wk.register({
   ["<C-Del>"] = { "<cmd>bd<cr>", "Unload current buffer" },
   ["<C-PageDown>"] = { "<cmd>bn<cr>", "Go to next buffer" },
@@ -129,9 +134,9 @@ wk.register({
 wk.register({
   x = {
     name = "diagnostics",
-    x = { function() trouble.toggle() end, "Toggle trouble list" },
-    w = { function() trouble.toggle("workspace_diagnostics") end, "Show workspace diagnostics" },
-    d = { function() trouble.toggle("document_diagnostics") end, "Show document diagnostics" },
+    x = { function() trouble.toggle("diagnostics") end, "Toggle diagnostics list" },
+    s = { function() trouble.toggle("symbols") end, "Toggle symbols list" },
+    d = { function() trouble.toggle("lsp") end, "Toggle definitions list" },
     q = { function() trouble.toggle("quickfix") end, "Toggle errors list" },
     l = { function() trouble.toggle("loclist") end, "Toggle window location list" },
   },
@@ -177,20 +182,5 @@ wk.register({
     name = "plugins",
     l = { function() lazy.home() end, "Got to plugins list" },
     u = { function() lazy.update() end, "Update plugins" },
-  },
-}, { prefix = "<leader>" })
-
-wk.register({
-  t = {
-    name = "themes",
-    t = {
-      function()
-        catppuccin.options.transparent_background = not catppuccin.options.transparent_background
-        catppuccin.compile()
-        vim.cmd.colorscheme(vim.g.colors_name)
-        vim.opt.showtabline = 0
-      end,
-      "Toggle between transparent background",
-    },
   },
 }, { prefix = "<leader>" })
