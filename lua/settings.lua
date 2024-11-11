@@ -59,3 +59,4 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 
 -- Key Mappings
 vim.g.mapleader = ","
+vim.g.maplocalleader = ","

@@ -143,6 +143,19 @@ wk.register({
 }, { prefix = "<leader>" })
 
 wk.register({
+  z = {
+    name = "copilot",
+    z = { "<cmd>CodeCompanionChat Toggle<CR>", "Toggle chat" },
+    e = { "<cmd>CodeCompanion /explain<CR>", "Explain code" },
+    d = { "<cmd>CodeCompanion /lsp<CR>", "Explain diagnostics" },
+    f = { "<cmd>CodeCompanion /fix<CR>", "Fix code" },
+    t = { "<cmd>CodeCompanion /tests<CR>", "Generate tests" },
+    c = { "<cmd>CodeCompanion /commit<CR>", "Generate commit message" },
+    a = { "<cmd>CodeCompanionActions<CR>", "Open actions menu" },
+  },
+}, { mode = { "n", "v" }, prefix = "<leader>" })
+
+wk.register({
   d = {
     name = "debug",
     d = { function() dap.step_over() end, "Step into a function if possible" },

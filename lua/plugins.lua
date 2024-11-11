@@ -32,6 +32,7 @@ require("lazy").setup({
   "theHamsta/nvim-dap-virtual-text",
   "nvimtools/none-ls.nvim",
   "folke/trouble.nvim",
+  "olimorris/codecompanion.nvim",
   "lewis6991/gitsigns.nvim",
   { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
   "sitiom/nvim-numbertoggle",
@@ -43,6 +44,7 @@ require("lazy").setup({
   "gbprod/substitute.nvim",
   "nvim-pack/nvim-spectre",
   "ThePrimeagen/harpoon",
+  "MeanderingProgrammer/render-markdown.nvim",
 })
 
 -- GitHub theme
@@ -226,10 +228,22 @@ telescope.load_extension("macros")
 -- https://github.com/nvim-treesitter/nvim-treesitter
 -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 require("nvim-treesitter.configs").setup({
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust", "php", "bash" },
+  ensure_installed = {
+    "c",
+    "lua",
+    "vim",
+    "vimdoc",
+    "query",
+    "markdown",
+    "markdown_inline",
+    "yaml",
+    "rust",
+    "php",
+    "bash",
+  },
   sync_install = false,
   auto_install = false,
-  highlight = { enable = false },
+  highlight = { enable = true },
   indent = { enable = true },
   incremental_selection = {
     enable = true,
@@ -383,6 +397,25 @@ require("trouble").setup({
   },
 })
 
+-- Codecompanion plugin
+-- https://github.com/olimorris/codecompanion.nvim
+require("codecompanion").setup({
+  strategies = {
+    chat = { adapter = "openai" },
+    inline = { adapter = "openai" },
+  },
+  adapters = {
+    openai = function()
+      return require("codecompanion.adapters").extend("openai", {
+        schema = {
+          model = { default = "gpt-4-turbo", choices = { "gpt-4-turbo", "gpt-3.5-turbo" } },
+        },
+      })
+    end,
+  },
+  display = { chat = { start_in_insert_mode = true } },
+})
+
 -- Gitsigns plugin
 -- https://github.com/lewis6991/gitsigns.nvim
 require("gitsigns").setup()
@@ -416,6 +449,13 @@ require("spectre").setup({
   default = {
     find = { cmd = "rg", options = {} },
   },
+})
+
+-- Render-markdown plugin
+-- https://github.com/MeanderingProgrammer/render-markdown.nvim
+require("render-markdown").setup({
+  file_types = { "markdown", "codecompanion" },
+  latex = { enabled = false },
 })
 
 -- Alpha plugin

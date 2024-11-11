@@ -35,6 +35,7 @@ minimalist Neovim config (< 500 lines).
 - https://github.com/mfussenegger/nvim-dap
 - https://github.com/theHamsta/nvim-dap-virtual-text
 - https://github.com/folke/trouble.nvim
+- https://github.com/olimorris/codecompanion.nvim
 - https://github.com/L3MON4D3/LuaSnip
 - https://github.com/honza/vim-snippets
 - https://github.com/saadparwaiz1/cmp_luasnip
@@ -44,6 +45,7 @@ minimalist Neovim config (< 500 lines).
 - https://github.com/numToStr/Comment.nvim
 - https://github.com/lewis6991/gitsigns.nvim
 - https://github.com/lukas-reineke/indent-blankline.nvim
+- https://github.com/MeanderingProgrammer/render-markdown.nvim
 
 ## Theme
 
