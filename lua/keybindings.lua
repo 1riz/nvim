@@ -2,6 +2,7 @@
 -- NVIM Key bindings
 --
 
+local catppuccin = require("catppuccin")
 local dap = require("dap")
 local dap_widgets = require("dap.ui.widgets")
 local gitsigns = require("gitsigns")
@@ -27,12 +28,18 @@ wk.setup({
     mappings = false,
   },
 })
+
 wk.register({
-  ["<C-Del>"] = { "<cmd>bd<cr>", "Unload current buffer" },
+  ["<C-Del>"] = { "<cmd>Bdelete<cr>", "Delete current buffer" },
   ["<C-PageDown>"] = { "<cmd>bn<cr>", "Go to next buffer" },
   ["<C-PageUp>"] = { "<cmd>bp<cr>", "Go to previous buffer" },
+  ["<C-Left>"] = { "<C-w>h", "Go to left window" },
+  ["<C-Down>"] = { "<C-w>j", "Go to lower window" },
+  ["<C-Up>"] = { "<C-w>k", "Go to upper window" },
+  ["<C-Right>"] = { "<C-w>l", "Go to right window" },
   ["<C-s>"] = { "<cmd>wa<cr>", "Write all changed buffers" },
   ["<C-q>"] = { "<cmd>qa<cr>", "Exit Neovim" },
+  ["<C-n>"] = { "<cmd>vnew<cr>", "New window" },
   ["<C-a>"] = { "ggVG", "Select all current buffer" },
   ["<M-r>"] = { "<cmd>set relativenumber!<cr>", "Toggle relative line numbers" },
   ["<M-b>"] = { "<cmd>set showtabline=2<cr>", "Show tabline" },
@@ -77,7 +84,7 @@ wk.register({
 wk.register({
   o = { function() telescope.extensions.frecency.frecency() end, "Open recent files" },
   e = { function() telescope.extensions.file_browser.file_browser() end, "File browser" },
-  p = { function() telescope.extensions.projects.projects() end, "Project browser" },
+  p = { function() telescope.extensions.projects.projects({ layout_config = { height = 0.50 } }) end, "Project browser" },
   b = { function() telescope_builtin.buffers() end, "List open buffers" },
   f = { function() telescope_builtin.find_files() end, "Find files" },
   s = { function() session_manager.load_session(true) end, "List saved sessions" },
@@ -195,5 +202,19 @@ wk.register({
     name = "plugins",
     l = { function() lazy.home() end, "Got to plugins list" },
     u = { function() lazy.update() end, "Update plugins" },
+  },
+}, { prefix = "<leader>" })
+
+wk.register({
+  t = {
+    name = "themes",
+    t = {
+      function()
+        catppuccin.options.transparent_background = not catppuccin.options.transparent_background
+        catppuccin.compile()
+        vim.cmd.colorscheme(vim.g.colors_name)
+      end,
+      "Toggle between transparent background",
+    },
   },
 }, { prefix = "<leader>" })

@@ -7,11 +7,12 @@
 vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 
 require("lazy").setup({
-  "projekt0n/github-nvim-theme",
+  { "catppuccin/nvim", priority = 1000 },
   "nvim-tree/nvim-web-devicons",
   "nvim-tree/nvim-tree.lua",
   "nvim-lua/plenary.nvim",
   "nvim-lualine/lualine.nvim",
+  { "akinsho/bufferline.nvim", version = "*" },
   "folke/which-key.nvim",
   "nvim-telescope/telescope-ui-select.nvim",
   "nvim-telescope/telescope-file-browser.nvim",
@@ -36,6 +37,7 @@ require("lazy").setup({
   "lewis6991/gitsigns.nvim",
   { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
   "sitiom/nvim-numbertoggle",
+  "famiu/bufdelete.nvim",
   "nvimdev/hlsearch.nvim",
   "Shatur/neovim-session-manager",
   "ahmedkhalf/project.nvim",
@@ -47,17 +49,20 @@ require("lazy").setup({
   "MeanderingProgrammer/render-markdown.nvim",
 })
 
--- GitHub theme
--- https://github.com/projekt0n/github-nvim-theme
-local github_theme_groups = {
-  github_dark_default = {
-    CursorLine = { bg = "#222222" },
+-- Catppuccin theme
+-- https://github.com/catppuccin/nvim
+require("catppuccin").setup({
+  flavour = "mocha",
+  transparent_background = false,
+  default_integrations = true,
+  integrations = {
+    harpoon = true,
+    nvim_surround = true,
+    lsp_trouble = true,
+    which_key = true,
   },
-}
-require("github-theme").setup({
-  groups = github_theme_groups,
 })
-vim.cmd("colorscheme github_dark_default")
+vim.cmd.colorscheme("catppuccin")
 
 -- Nvim-web-devicons plugin
 -- https://github.com/nvim-tree/nvim-web-devicons
@@ -74,26 +79,23 @@ require("nvim-tree").setup({
     width = 35,
   },
   renderer = {
-    root_folder_label = ":~:$?",
+    root_folder_label = false,
   },
   filters = {
     git_ignored = false,
     dotfiles = false,
+    custom = { "^.git$" },
   },
 })
 
 -- Lualine plugin
 -- https://github.com/nvim-lualine/lualine.nvim
--- https://github.com/nvim-lualine/lualine.nvim/blob/master/lua/lualine/themes/powerline.lua
-local lualine_custom_theme = require("lualine.themes.powerline")
-lualine_custom_theme.insert.a.bg = "#005f87"
-lualine_custom_theme.insert.a.fg = "#87dfff"
-lualine_custom_theme.insert.b = lualine_custom_theme.normal.b
-lualine_custom_theme.insert.c = lualine_custom_theme.normal.c
-require("lualine").setup({
+local lualine = require("lualine")
+local lualine_codecompanion = { sections = { lualine_a = { function() return [[CodeCompanion]] end } }, filetypes = { "codecompanion" } }
+local lualine_trouble = { sections = { lualine_a = { function() return [[Diagnostics]] end } }, filetypes = { "trouble" } }
+lualine.setup({
   options = {
-    theme = lualine_custom_theme,
-    icons_enabled = false,
+    theme = "catppuccin",
     component_separators = { left = "", right = "|" },
     section_separators = { left = "", right = "" },
   },
@@ -105,25 +107,33 @@ require("lualine").setup({
     lualine_x = {
       { function() return string.gsub(vim.fn.getcwd(), "^(.+)/(.+)$", "%2") end },
       "encoding",
-      "fileformat",
+      { "fileformat", icons_enabled = false },
       "filetype",
     },
   },
-  tabline = {
-    lualine_a = {
+  extensions = { "nvim-tree", lualine_trouble, lualine_codecompanion },
+})
+
+-- Bufferline plugin
+-- https://github.com/akinsho/bufferline.nvim
+local bufferline = require("bufferline")
+bufferline.setup({
+  options = {
+    style_preset = bufferline.style_preset.no_italic,
+    always_show_bufferline = false,
+    indicator = {
+      style = "none",
+    },
+    offsets = {
       {
-        "buffers",
-        show_modified_status = false,
-        symbols = { alternate_file = "" },
-        filetype_names = {
-          TelescopePrompt = "",
-          spectre_panel = "",
-        },
+        filetype = "NvimTree",
+        text = function() return string.gsub(vim.fn.getcwd(), "^(.+)/(.+)$", "%2") end,
+        text_align = "left",
+        highlight = "Directory",
       },
     },
   },
 })
-vim.opt.showtabline = 0
 
 -- SessionManager plugin
 -- https://github.com/Shatur/neovim-session-manager
@@ -136,6 +146,7 @@ require("session_manager").setup({
 -- Project plugin
 -- https://github.com/ahmedkhalf/project.nvim
 require("project_nvim").setup({
+  detection_methods = { "pattern" },
   patterns = { ".git" },
 })
 
@@ -228,22 +239,13 @@ telescope.load_extension("macros")
 -- https://github.com/nvim-treesitter/nvim-treesitter
 -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 require("nvim-treesitter.configs").setup({
-  ensure_installed = {
-    "c",
-    "lua",
-    "vim",
-    "vimdoc",
-    "query",
-    "markdown",
-    "markdown_inline",
-    "yaml",
-    "rust",
-    "php",
-    "bash",
-  },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "yaml", "rust", "php", "bash" },
   sync_install = false,
   auto_install = false,
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
   indent = { enable = true },
   incremental_selection = {
     enable = true,
@@ -407,13 +409,11 @@ require("codecompanion").setup({
   adapters = {
     openai = function()
       return require("codecompanion.adapters").extend("openai", {
-        schema = {
-          model = { default = "gpt-4-turbo", choices = { "gpt-4-turbo", "gpt-3.5-turbo" } },
-        },
+        schema = { model = { default = "gpt-4-turbo", choices = { "gpt-4-turbo", "gpt-3.5-turbo" } } },
       })
     end,
   },
-  display = { chat = { start_in_insert_mode = true } },
+  display = { chat = { render_headers = false, start_in_insert_mode = true } },
 })
 
 -- Gitsigns plugin
@@ -429,6 +429,9 @@ require("ibl").setup({
 
 -- Numbertoggle plugin
 -- https://github.com/sitiom/nvim-numbertoggle
+
+-- Bufdelete plugin
+-- https://github.com/famiu/bufdelete.nvim
 
 -- Hlsearch plugin
 -- https://github.com/nvimdev/hlsearch.nvim

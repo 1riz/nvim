@@ -11,6 +11,7 @@ minimalist Neovim config (< 500 lines).
 
 - https://github.com/folke/lazy.nvim
 - https://github.com/nvim-lualine/lualine.nvim
+- https://github.com/akinsho/bufferline.nvim
 - https://github.com/nvim-tree/nvim-tree.lua
 - https://github.com/nvim-tree/nvim-web-devicons
 - https://github.com/nvim-telescope/telescope.nvim
@@ -25,6 +26,7 @@ minimalist Neovim config (< 500 lines).
 - https://github.com/gbprod/substitute.nvim
 - https://github.com/nvim-pack/nvim-spectre
 - https://github.com/sitiom/nvim-numbertoggle
+- https://github.com/famiu/bufdelete.nvim
 - https://github.com/nvimdev/hlsearch.nvim
 - https://github.com/goolord/alpha-nvim
 - https://github.com/folke/which-key.nvim

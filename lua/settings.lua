@@ -10,8 +10,10 @@ vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.shada = "!,'100,<50,s10,h"
 
 -- UI
+vim.opt.termguicolors = true
 vim.opt.title = true
 vim.opt.cursorline = true
+vim.opt.showtabline = 0
 vim.opt.number = true
 vim.opt.list = true
 vim.opt.listchars = "tab:▸ ,trail:▫"
@@ -24,7 +26,6 @@ vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.sessionoptions = "buffers,curdir"
 vim.opt.mousemodel = "extend"
-vim.opt.termguicolors = true
 
 -- Formatting
 vim.opt.wrap = false
