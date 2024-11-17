@@ -17,6 +17,7 @@ require("lazy").setup({
   "nvim-telescope/telescope-ui-select.nvim",
   "nvim-telescope/telescope-file-browser.nvim",
   "nvim-telescope/telescope-frecency.nvim",
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   "1riz/telescope-macros.nvim",
   { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
   "neovim/nvim-lspconfig",
@@ -91,7 +92,7 @@ require("nvim-tree").setup({
 -- Lualine plugin
 -- https://github.com/nvim-lualine/lualine.nvim
 local lualine = require("lualine")
-local lualine_codecompanion = { sections = { lualine_a = { function() return [[CodeCompanion]] end } }, filetypes = { "codecompanion" } }
+local lualine_codecompanion = { sections = { lualine_a = { function() return [[OpenAI]] end } }, filetypes = { "codecompanion" } }
 local lualine_trouble = { sections = { lualine_a = { function() return [[Diagnostics]] end } }, filetypes = { "trouble" } }
 lualine.setup({
   options = {
@@ -121,6 +122,8 @@ bufferline.setup({
   options = {
     style_preset = bufferline.style_preset.no_italic,
     always_show_bufferline = false,
+    close_command = "Bdelete! %d",
+    right_mouse_command = "Bdelete! %d",
     indicator = {
       style = "none",
     },
@@ -184,14 +187,15 @@ require("harpoon").setup({
 -- https://github.com/nvim-telescope/telescope-ui-select.nvim
 -- https://github.com/nvim-telescope/telescope-file-browser.nvim
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
+-- https://github.com/nvim-telescope/telescope-fzf-native.nvim
 local telescope = require("telescope")
 telescope.setup({
   defaults = {
     layout_strategy = "horizontal",
     layout_config = {
-      height = 0.87,
-      width = 0.87,
-      horizontal = { preview_width = 0.5 },
+      height = 0.8,
+      width = 0.9,
+      horizontal = { preview_width = 0.6 },
     },
     dynamic_preview_title = true,
     results_title = false,
@@ -222,11 +226,9 @@ telescope.setup({
       theme = "ivy",
       hijack_netrw = true,
     },
-    ["frecency"] = {
-      show_scores = true,
-    },
   },
 })
+telescope.load_extension("fzf")
 telescope.load_extension("ui-select")
 telescope.load_extension("file_browser")
 telescope.load_extension("frecency")

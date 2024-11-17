@@ -12,6 +12,7 @@ vim.opt.shada = "!,'100,<50,s10,h"
 -- UI
 vim.opt.termguicolors = true
 vim.opt.title = true
+vim.opt.titlestring = "Neovim"
 vim.opt.cursorline = true
 vim.opt.showtabline = 0
 vim.opt.number = true
@@ -33,6 +34,10 @@ vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
+vim.api.nvim_create_autocmd({ "DirChanged" }, {
+  pattern = { "*" },
+  callback = function() vim.opt.titlestring = string.gsub(vim.fn.getcwd(), "^(.+)/(.+)$", "%2") .. " - Neovim" end,
+})
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   pattern = { "*.c", "*.h" },
   callback = function()

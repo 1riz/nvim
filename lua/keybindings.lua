@@ -181,9 +181,13 @@ wk.register({
     name = "git",
     g = { function() gitsigns.toggle_signs() end, "Toggle signs column" },
     d = { function() gitsigns.diffthis() end, "Show differences" },
-    b = { function() gitsigns.toggle_current_line_blame() end, "Toggle current line blame" },
+    l = { function() gitsigns.toggle_current_line_blame() end, "Toggle current line blame" },
     r = { function() gitsigns.reset_hunk() end, "Reset hunk" },
     R = { function() gitsigns.reset_buffer() end, "Reset buffer" },
+    c = { function() telescope_builtin.git_commits() end, "List commits" },
+    b = { function() telescope_builtin.git_branches() end, "List branches" },
+    s = { function() telescope_builtin.git_status() end, "List current changes" },
+    t = { function() telescope_builtin.git_stash() end, "List stash items" },
   },
 }, { prefix = "<leader>" })
 
