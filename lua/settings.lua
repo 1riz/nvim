@@ -15,6 +15,7 @@ vim.opt.title = true
 vim.opt.titlestring = "Neovim"
 vim.opt.cursorline = true
 vim.opt.showtabline = 0
+vim.opt.splitright = true
 vim.opt.number = true
 vim.opt.list = true
 vim.opt.listchars = "tab:▸ ,trail:▫"

@@ -23,6 +23,7 @@ require("lazy").setup({
   "neovim/nvim-lspconfig",
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   "nvim-treesitter/nvim-treesitter-textobjects",
+  "rafamadriz/friendly-snippets",
   { "L3MON4D3/LuaSnip", version = "v2.*" },
   "saadparwaiz1/cmp_luasnip",
   "hrsh7th/cmp-nvim-lsp",
@@ -241,7 +242,7 @@ telescope.load_extension("macros")
 -- https://github.com/nvim-treesitter/nvim-treesitter
 -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 require("nvim-treesitter.configs").setup({
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "yaml", "rust", "php", "bash" },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "yaml", "php", "bash" },
   sync_install = false,
   auto_install = false,
   highlight = {
@@ -293,8 +294,8 @@ end
 
 -- LuaSnip plugin
 -- https://github.com/L3MON4D3/LuaSnip
--- https://github.com/honza/vim-snippets
-require("luasnip.loaders.from_snipmate").load({ paths = "./snippets" })
+-- https://github.com/rafamadriz/friendly-snippets
+require("luasnip.loaders.from_vscode").lazy_load()
 local luasnip = require("luasnip")
 
 -- Cmp plugin
@@ -318,11 +319,10 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 lspconfig.bashls.setup({ capabilities = capabilities })
 lspconfig.lua_ls.setup({ capabilities = capabilities })
 lspconfig.clangd.setup({ capabilities = capabilities })
-lspconfig.rust_analyzer.setup({ capabilities = capabilities })
 lspconfig.intelephense.setup({
   capabilities = capabilities,
-  root_dir = function() return vim.loop.cwd() end,
-  init_options = { globalStoragePath = "/tmp/intelephense", licenseKey = "XXXXXXXXXXXXXXX" },
+  root_dir = function() return vim.fn.getcwd() end,
+  init_options = { globalStoragePath = "/tmp/intelephense", licenseKey = os.getenv("INTELEPHENSE_KEY") },
   settings = { intelephense = { files = { maxSize = 10000000 } } },
 })
 
@@ -385,8 +385,7 @@ null_ls.setup({
       extra_args = { "--options=" .. vim.fn.stdpath("config") .. "/.astylerc" },
       filetypes = { "c" },
     }),
-    null_ls.builtins.formatting.rustfmt.with({ extra_args = { "--edition", "2021" } }),
-    null_ls.builtins.formatting.phpcsfixer.with({ extra_args = { "--rules=@PSR12" } }),
+    null_ls.builtins.formatting.phpcbf.with({ extra_args = { "--standard=PSR12" } }),
     null_ls.builtins.diagnostics.phpcs.with({ extra_args = { "--standard=PSR12" } }),
   },
 })
@@ -411,11 +410,18 @@ require("codecompanion").setup({
   adapters = {
     openai = function()
       return require("codecompanion.adapters").extend("openai", {
-        schema = { model = { default = "gpt-4-turbo", choices = { "gpt-4-turbo", "gpt-3.5-turbo" } } },
+        env = { api_key = os.getenv("OPENAI_API_KEY") },
+        schema = { model = { default = os.getenv("OPENAI_MODEL"), choices = { "gpt-4-turbo", "gpt-3.5-turbo" } } },
       })
     end,
   },
-  display = { chat = { render_headers = false, start_in_insert_mode = true } },
+  display = {
+    chat = {
+      show_token_count = false,
+      render_headers = false,
+      start_in_insert_mode = true,
+    },
+  },
 })
 
 -- Gitsigns plugin

@@ -40,9 +40,9 @@ minimalist Neovim config (< 500 lines).
 - https://github.com/folke/trouble.nvim
 - https://github.com/olimorris/codecompanion.nvim
 - https://github.com/L3MON4D3/LuaSnip
-- https://github.com/honza/vim-snippets
-- https://github.com/saadparwaiz1/cmp_luasnip
+- https://github.com/rafamadriz/friendly-snippets
 - https://github.com/hrsh7th/nvim-cmp
+- https://github.com/saadparwaiz1/cmp_luasnip
 - https://github.com/windwp/nvim-autopairs
 - https://github.com/kylechui/nvim-surround
 - https://github.com/numToStr/Comment.nvim
@@ -52,7 +52,7 @@ minimalist Neovim config (< 500 lines).
 
 ## Theme
 
-- https://github.com/projekt0n/github-nvim-theme
+- https://github.com/catppuccin/nvim
 
 ## Installation
 
@@ -68,13 +68,7 @@ minimalist Neovim config (< 500 lines).
 ./scripts/install.lua
 ```
 
-3) Install desired snippets
-
-```bash
-./scripts/install-snippets.lua bash sh lua c rust php
-```
-
-4) Execute NVIM to finish the installation
+3) Execute NVIM to finish the installation
 
 ```bash
 nvim
@@ -98,24 +92,24 @@ nvim .config/nvim/.luarc.json
 ### Language specific (Optional)
 
 **Lua**
+- lua
 - stylua
 - lua-language-server
 
 **Bash**
+- bash
 - shellcheck
 - shfmt
 - bash-language-server
 
 **C**
+- gcc
 - gdb
 - astyle
 - clangd
 
-**Rust**
-- rust-analizer
-- rustfmt
-
 **PHP**
+- php
 - phpcs
-- php-cs-fixer
+- phpcbf
 - intelephense

@@ -3,6 +3,7 @@
 --
 
 local catppuccin = require("catppuccin")
+local codecompanion = require("codecompanion")
 local dap = require("dap")
 local dap_widgets = require("dap.ui.widgets")
 local gitsigns = require("gitsigns")
@@ -153,11 +154,11 @@ wk.register({
   z = {
     name = "copilot",
     z = { "<cmd>CodeCompanionChat Toggle<CR>", "Toggle chat" },
-    e = { "<cmd>CodeCompanion /explain<CR>", "Explain code" },
-    d = { "<cmd>CodeCompanion /lsp<CR>", "Explain diagnostics" },
-    f = { "<cmd>CodeCompanion /fix<CR>", "Fix code" },
-    t = { "<cmd>CodeCompanion /tests<CR>", "Generate tests" },
-    c = { "<cmd>CodeCompanion /commit<CR>", "Generate commit message" },
+    e = { function() codecompanion.prompt("explain") end, "Explain code" },
+    d = { function() codecompanion.prompt("lsp") end, "Explain diagnostics" },
+    f = { function() codecompanion.prompt("fix") end, "Fix code" },
+    t = { function() codecompanion.prompt("tests") end, "Generate tests" },
+    c = { function() codecompanion.prompt("commit") end, "Generate commit message" },
     a = { "<cmd>CodeCompanionActions<CR>", "Open actions menu" },
   },
 }, { mode = { "n", "v" }, prefix = "<leader>" })
