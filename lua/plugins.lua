@@ -56,6 +56,7 @@ require("lazy").setup({
 require("catppuccin").setup({
   flavour = "mocha",
   transparent_background = false,
+  term_colors = true,
   default_integrations = true,
   integrations = {
     harpoon = true,
@@ -82,6 +83,9 @@ require("nvim-tree").setup({
   },
   renderer = {
     root_folder_label = false,
+  },
+  git = {
+    enable = false,
   },
   filters = {
     git_ignored = false,
@@ -411,7 +415,7 @@ require("codecompanion").setup({
     openai = function()
       return require("codecompanion.adapters").extend("openai", {
         env = { api_key = os.getenv("OPENAI_API_KEY") },
-        schema = { model = { default = os.getenv("OPENAI_MODEL"), choices = { "gpt-4-turbo", "gpt-3.5-turbo" } } },
+        schema = { model = { default = "gpt-4o" } },
       })
     end,
   },
