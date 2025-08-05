@@ -29,199 +29,204 @@ wk.setup({
     mappings = false,
   },
 })
+local s = "<space>"
+local l = "<leader>"
 
-wk.register({
-  ["<C-Del>"] = { "<cmd>Bdelete<cr>", "Delete current buffer" },
-  ["<C-PageDown>"] = { "<cmd>bn<cr>", "Go to next buffer" },
-  ["<C-PageUp>"] = { "<cmd>bp<cr>", "Go to previous buffer" },
-  ["<C-Left>"] = { "<C-w>h", "Go to left window" },
-  ["<C-Down>"] = { "<C-w>j", "Go to lower window" },
-  ["<C-Up>"] = { "<C-w>k", "Go to upper window" },
-  ["<C-Right>"] = { "<C-w>l", "Go to right window" },
-  ["<C-s>"] = { "<cmd>wa<cr>", "Write all changed buffers" },
-  ["<C-q>"] = { "<cmd>qa<cr>", "Exit Neovim" },
-  ["<C-n>"] = { "<cmd>new<cr>", "New horizontal window" },
-  ["<C-l>"] = { "<cmd>vnew<cr>", "New vertical window" },
-  ["<C-Enter>"] = { "<cmd>terminal<cr>", "New terminal" },
-  ["<C-a>"] = { "ggVG", "Select all current buffer" },
-  ["<M-r>"] = { "<cmd>set relativenumber!<cr>", "Toggle relative line numbers" },
-  ["<M-b>"] = { "<cmd>set showtabline=2<cr>", "Show tabline" },
-  ["<S-M-b>"] = { "<cmd>set showtabline=0<cr>", "Hide tabline" },
-  ["<M-i>"] = { "<cmd>IBLToggle<cr>", "Toggle indentation guides" },
-  ["<S-M-i>"] = { "<cmd>IBLToggleScope<cr>", "Toggle scope guides" },
-  ["<leader><leader>"] = { "<cmd>WhichKey<cr>", "Show all key bindings" },
+-- Generic mappings
+wk.add({
+  { "<C-Del>", "<cmd>Bdelete<cr>", desc = "Delete current buffer" },
+  { "<C-PageDown>", "<cmd>bn<cr>", desc = "Go to next buffer" },
+  { "<C-PageUp>", "<cmd>bp<cr>", desc = "Go to previous buffer" },
+  { "<C-Left>", "<C-w>h", desc = "Go to left window" },
+  { "<C-Down>", "<C-w>j", desc = "Go to lower window" },
+  { "<C-Up>", "<C-w>k", desc = "Go to upper window" },
+  { "<C-Right>", "<C-w>l", desc = "Go to right window" },
+  { "<C-s>", "<cmd>wa<cr>", desc = "Write all changed buffers" },
+  { "<C-q>", "<cmd>qa<cr>", desc = "Exit Neovim" },
+  { "<C-n>", "<cmd>new<cr>", desc = "New horizontal window" },
+  { "<C-l>", "<cmd>vnew<cr>", desc = "New vertical window" },
+  { "<C-Enter>", "<cmd>terminal<cr>", desc = "New terminal" },
+  { "<C-a>", "ggVG", desc = "Select all current buffer" },
+  { "<M-r>", "<cmd>set relativenumber!<cr>", desc = "Toggle relative line numbers" },
+  { "<M-b>", "<cmd>set showtabline=2<cr>", desc = "Show tabline" },
+  { "<S-M-b>", "<cmd>set showtabline=0<cr>", desc = "Hide tabline" },
+  { "<M-i>", "<cmd>IBLToggle<cr>", desc = "Toggle indentation guides" },
+  { "<S-M-i>", "<cmd>IBLToggleScope<cr>", desc = "Toggle scope guides" },
+  { l .. l, "<cmd>WhichKey<cr>", desc = "Show all key bindings" },
 })
 
-wk.register({
-  p = { "<Plug>(YankyPutAfter)", "Put the text from register after the cursor" },
-  P = { "<Plug>(YankyPutBefore)", "Put the text from register before the cursor" },
-  gp = { "<Plug>(YankyGPutAfter)", "Like 'p' but leave the cursor after the new text" },
-  gP = { "<Plug>(YankyGPutBefore)", "Like 'P' but leave the cursor after the new text" },
-}, { mode = { "n", "x" } })
-
-wk.register({
-  ["<M-n>"] = { "<Plug>(YankyCycleForward)", "Cycle forward through the yank history" },
-  ["<M-p>"] = { "<Plug>(YankyCycleBackward)", "Cycle backwards through the yank history" },
+-- Generic mappings using <space>
+wk.add({
+  { s .. "o", function() telescope.extensions.frecency.frecency() end, desc = "Open recent files" },
+  { s .. "e", function() telescope.extensions.file_browser.file_browser() end, desc = "File browser" },
+  { s .. "p", function() telescope.extensions.projects.projects({ layout_config = { height = 0.50 } }) end, desc = "Project browser" },
+  { s .. "b", function() telescope_builtin.buffers() end, desc = "List open buffers" },
+  { s .. "f", function() telescope_builtin.find_files() end, desc = "Find files" },
+  { s .. "s", function() session_manager.load_session(true) end, desc = "List saved sessions" },
+  { s .. "y", function() telescope.extensions.yank_history.yank_history() end, desc = "Show yank history" },
+  { s .. "m", function() telescope.extensions.macros.macros() end, desc = "Show saved macros" },
+  { s .. "g", function() telescope_builtin.live_grep() end, desc = "Search string in files" },
+  { s .. "h", function() telescope.extensions.harpoon.marks() end, desc = "Show currents marks" },
+  { s .. "t", function() telescope_builtin.help_tags() end, desc = "Show help tags" },
+  { s .. "d", function() ntree.tree.toggle() end, desc = "Explore directories" },
+  { s .. s, function() telescope_builtin.builtin() end, desc = "Show all pickers" },
 })
 
-wk.register({
-  s = { function() substitute.operator() end, "Substitute text with register" },
-  ss = { function() substitute.line() end, "Substitute line with register" },
-  S = { function() substitute.eol() end, "Substitute to end of line with register" },
-  sx = { function() substitute_exchange.operator() end, "Exchange selected text" },
-  sxx = { function() substitute_exchange.line() end, "Exchange selected lines" },
+-- Coding mappings
+wk.add({
+  { l .. "c", group = "coding" },
+  { l .. "cc", function() vim.lsp.buf.code_action() end, desc = "Execute code actions" },
+  { l .. "ch", function() vim.lsp.buf.hover() end, desc = "Display symbol information" },
+  { l .. "cf", function() vim.lsp.buf.format() end, desc = "Format current buffer" },
+  { l .. "cr", function() vim.lsp.buf.references() end, desc = "List symbol references" },
+  { l .. "ci", function() vim.lsp.buf.implementation() end, desc = "List symbol implementations" },
+  { l .. "cd", function() vim.lsp.buf.definition() end, desc = "Jump to the definition of the symbol" },
+  { l .. "ct", function() vim.lsp.buf.type_definition() end, desc = "Jump to the definition of the type of the symbol" },
+  { l .. "cn", function() vim.lsp.buf.rename() end, desc = "Rename symbol in current buffer" },
+  { l .. "cs", function() telescope_builtin.treesitter() end, desc = "Search syntax tree symbols" },
 })
 
-wk.register({
-  s = { function() substitute.visual() end, "Substitute selection with register contents" },
-  X = { function() substitute_exchange.visual() end, "Exchange selections" },
-}, { mode = { "x" } })
-
-wk.register({
-  ["<M-m>"] = { function() harpoon_mark.add_file() end, "Mark file" },
-  ["<M-h>"] = { function() harpoon_ui.toggle_quick_menu() end, "View all project marks" },
-  ["<M-Right>"] = { function() harpoon_ui.nav_next() end, "Navigates to next mark" },
-  ["<M-Left>"] = { function() harpoon_ui.nav_prev() end, "Navigates to previous mark" },
+wk.add({
+  { "<C-h>", function() vim.lsp.buf.hover() end, desc = "Display symbol information" },
 })
 
-wk.register({
-  o = { function() telescope.extensions.frecency.frecency() end, "Open recent files" },
-  e = { function() telescope.extensions.file_browser.file_browser() end, "File browser" },
-  p = { function() telescope.extensions.projects.projects({ layout_config = { height = 0.50 } }) end, "Project browser" },
-  b = { function() telescope_builtin.buffers() end, "List open buffers" },
-  f = { function() telescope_builtin.find_files() end, "Find files" },
-  s = { function() session_manager.load_session(true) end, "List saved sessions" },
-  y = { function() telescope.extensions.yank_history.yank_history() end, "Show yank history" },
-  m = { function() telescope.extensions.macros.macros() end, "Show saved macros" },
-  g = { function() telescope_builtin.live_grep() end, "Search string in files" },
-  h = { function() telescope.extensions.harpoon.marks() end, "Show currents marks" },
-  t = { function() telescope_builtin.help_tags() end, "Show help tags" },
-  d = { function() ntree.tree.toggle() end, "Explore directories" },
-  ["<space>"] = { function() telescope_builtin.builtin() end, "Show all pickers" },
-}, { prefix = "<space>" })
-
-wk.register({
-  r = {
-    name = "refactor",
-    r = { function() spectre.toggle() end, "Toggle search panel" },
-    w = { function() spectre.open_visual({ select_word = true }) end, "Search current word" },
-    f = { function() spectre.open_file_search({ select_word = true }) end, "Search on current file" },
-  },
-}, { prefix = "<leader>" })
-
-wk.register({
-  ["<C-h>"] = { function() vim.lsp.buf.hover() end, "Display symbol information" },
+wk.add({
+  { l .. "x", group = "diagnostics" },
+  { l .. "xx", function() trouble.toggle("diagnostics") end, desc = "Toggle diagnostics list" },
+  { l .. "xs", function() trouble.toggle("symbols") end, desc = "Toggle symbols list" },
+  { l .. "xd", function() trouble.toggle("lsp") end, desc = "Toggle definitions list" },
+  { l .. "xq", function() trouble.toggle("quickfix") end, desc = "Toggle errors list" },
+  { l .. "xl", function() trouble.toggle("loclist") end, desc = "Toggle window location list" },
 })
 
-wk.register({
-  c = {
-    name = "coding",
-    c = { function() vim.lsp.buf.code_action() end, "Execute code actions" },
-    h = { function() vim.lsp.buf.hover() end, "Display symbol information" },
-    f = { function() vim.lsp.buf.format() end, "Format current buffer" },
-    r = { function() vim.lsp.buf.references() end, "List symbol references" },
-    i = { function() vim.lsp.buf.implementation() end, "List symbol implementations" },
-    d = { function() vim.lsp.buf.definition() end, "Jump to the definition of the symbol" },
-    t = { function() vim.lsp.buf.type_definition() end, "Jump to the definition of the type of the symbol" },
-    n = { function() vim.lsp.buf.rename() end, "Rename symbol in current buffer" },
-    s = { function() telescope_builtin.treesitter() end, "Search syntax tree symbols" },
-  },
-}, { prefix = "<leader>" })
+wk.add({
+  { l .. "d", group = "debug" },
+  { l .. "dd", function() dap.step_over() end, desc = "Step into a function if possible" },
+  { l .. "dq", function() dap.step_out() end, desc = "Step out of a function if possible" },
+  { l .. "dr", function() dap.continue() end, desc = "Launch or resume debug session" },
+  { l .. "db", function() dap.toggle_breakpoint() end, desc = "Toggle breakpoint" },
+  { l .. "di", function() dap.repl.open() end, desc = "Inspect the state" },
+  { l .. "dh", function() dap_widgets.hover() end, desc = "View the value for the expression" },
+  { l .. "df", function() dap_widgets.centered_float(dap_widgets.frames) end, desc = "View the current frames" },
+  { l .. "ds", function() dap_widgets.centered_float(dap_widgets.scopes) end, desc = "View the current scopes" },
+})
 
-wk.register({
-  name = "snippets",
-  ["<C-k>"] = { function() luasnip.expand() end, "Expand snippet" },
-  ["<C-l>"] = { function() luasnip.jump(1) end, "Jump forward" },
-  ["<C-j>"] = { function() luasnip.jump(-1) end, "Jump backward" },
-  ["<C-e>"] = {
-    function()
-      if luasnip.choice_active() then luasnip.change_choice(1) end
-    end,
-    "Change the active choice",
-  },
-}, { mode = { "i", "s" } })
+-- Control version mappings
+wk.add({
+  { l .. "g", group = "git" },
+  { l .. "gg", function() gitsigns.toggle_signs() end, desc = "Toggle signs column" },
+  { l .. "gd", function() gitsigns.diffthis() end, desc = "Show differences" },
+  { l .. "gl", function() gitsigns.toggle_current_line_blame() end, desc = "Toggle current line blame" },
+  { l .. "gr", function() gitsigns.reset_hunk() end, desc = "Reset hunk" },
+  { l .. "gR", function() gitsigns.reset_buffer() end, desc = "Reset buffer" },
+  { l .. "gc", function() telescope_builtin.git_commits() end, desc = "List commits" },
+  { l .. "gb", function() telescope_builtin.git_branches() end, desc = "List branches" },
+  { l .. "gs", function() telescope_builtin.git_status() end, desc = "List current changes" },
+  { l .. "gt", function() telescope_builtin.git_stash() end, desc = "List stash items" },
+})
 
-wk.register({
-  x = {
-    name = "diagnostics",
-    x = { function() trouble.toggle("diagnostics") end, "Toggle diagnostics list" },
-    s = { function() trouble.toggle("symbols") end, "Toggle symbols list" },
-    d = { function() trouble.toggle("lsp") end, "Toggle definitions list" },
-    q = { function() trouble.toggle("quickfix") end, "Toggle errors list" },
-    l = { function() trouble.toggle("loclist") end, "Toggle window location list" },
+-- Search and replace mappings
+wk.add({
+  {
+    mode = { "n", "x" },
+    { "p", "<Plug>(YankyPutAfter)", desc = "Put the text from register after the cursor" },
+    { "P", "<Plug>(YankyPutBefore)", desc = "Put the text from register before the cursor" },
+    { "gp", "<Plug>(YankyGPutAfter)", desc = "Like 'p' but leave the cursor after the new text" },
+    { "gP", "<Plug>(YankyGPutBefore)", desc = "Like 'P' but leave the cursor after the new text" },
   },
-}, { prefix = "<leader>" })
+})
 
-wk.register({
-  z = {
-    name = "copilot",
-    z = { "<cmd>CodeCompanionChat Toggle<CR>", "Toggle chat" },
-    e = { function() codecompanion.prompt("explain") end, "Explain code" },
-    d = { function() codecompanion.prompt("lsp") end, "Explain diagnostics" },
-    f = { function() codecompanion.prompt("fix") end, "Fix code" },
-    t = { function() codecompanion.prompt("tests") end, "Generate tests" },
-    c = { function() codecompanion.prompt("commit") end, "Generate commit message" },
-    a = { "<cmd>CodeCompanionActions<CR>", "Open actions menu" },
+wk.add({
+  { "<M-n>", "<Plug>(YankyCycleForward)", desc = "Cycle forward through the yank history" },
+  { "<M-p>", "<Plug>(YankyCycleBackward)", desc = "Cycle backwards through the yank history" },
+  { "s", function() substitute.operator() end, desc = "Substitute text with register" },
+  { "ss", function() substitute.line() end, desc = "Substitute line with register" },
+  { "S", function() substitute.eol() end, desc = "Substitute to end of line with register" },
+  { "sx", function() substitute_exchange.operator() end, desc = "Exchange selected text" },
+  { "sxx", function() substitute_exchange.line() end, desc = "Exchange selected lines" },
+})
+
+wk.add({
+  {
+    mode = { "x" },
+    { "s", function() substitute.visual() end, desc = "Substitute selection with register contents" },
+    { "X", function() substitute_exchange.visual() end, desc = "Exchange selections" },
   },
-}, { mode = { "n", "v" }, prefix = "<leader>" })
+})
 
-wk.register({
-  d = {
-    name = "debug",
-    d = { function() dap.step_over() end, "Step into a function if possible" },
-    q = { function() dap.step_out() end, "Step out of a function if possible" },
-    r = { function() dap.continue() end, "Launch or resume debug session" },
-    b = { function() dap.toggle_breakpoint() end, "Toggle breakpoint" },
-    i = { function() dap.repl.open() end, "Inspect the state" },
-    h = { function() dap_widgets.hover() end, "View the value for the expression" },
-    f = { function() dap_widgets.centered_float(dap_widgets.frames) end, "View the current frames" },
-    s = { function() dap_widgets.centered_float(dap_widgets.scopes) end, "View the current scopes" },
-  },
-}, { prefix = "<leader>" })
+wk.add({
+  { l .. "r", group = "refactor" },
+  { l .. "rr", function() spectre.toggle() end, desc = "Toggle search panel" },
+  { l .. "rw", function() spectre.open_visual({ select_word = true }) end, desc = "Search current word" },
+  { l .. "rf", function() spectre.open_file_search({ select_word = true }) end, desc = "Search on current file" },
+})
 
-wk.register({
-  g = {
-    name = "git",
-    g = { function() gitsigns.toggle_signs() end, "Toggle signs column" },
-    d = { function() gitsigns.diffthis() end, "Show differences" },
-    l = { function() gitsigns.toggle_current_line_blame() end, "Toggle current line blame" },
-    r = { function() gitsigns.reset_hunk() end, "Reset hunk" },
-    R = { function() gitsigns.reset_buffer() end, "Reset buffer" },
-    c = { function() telescope_builtin.git_commits() end, "List commits" },
-    b = { function() telescope_builtin.git_branches() end, "List branches" },
-    s = { function() telescope_builtin.git_status() end, "List current changes" },
-    t = { function() telescope_builtin.git_stash() end, "List stash items" },
-  },
-}, { prefix = "<leader>" })
+-- Navigation mappings
+wk.add({
+  { "<M-m>", function() harpoon_mark.add_file() end, desc = "Mark file" },
+  { "<M-h>", function() harpoon_ui.toggle_quick_menu() end, desc = "View all project marks" },
+  { "<M-Right>", function() harpoon_ui.nav_next() end, desc = "Navigates to next mark" },
+  { "<M-Left>", function() harpoon_ui.nav_prev() end, desc = "Navigates to previous mark" },
+})
 
-wk.register({
-  s = {
-    name = "session",
-    o = { function() session_manager.load_session(true) end, "Select and load session" },
-    s = { function() session_manager.save_current_session() end, "Save session for the current directory" },
-    l = { function() session_manager.load_current_dir_session(true) end, "Load session for the current directory" },
-    d = { function() session_manager.delete_session() end, "Select and delete session" },
-  },
-}, { prefix = "<leader>" })
-
-wk.register({
-  l = {
-    name = "plugins",
-    l = { function() lazy.home() end, "Got to plugins list" },
-    u = { function() lazy.update() end, "Update plugins" },
-  },
-}, { prefix = "<leader>" })
-
-wk.register({
-  t = {
-    name = "themes",
-    t = {
+-- Snippets mappings
+wk.add({
+  {
+    mode = { "i", "s" },
+    { "<C-k>", function() luasnip.expand() end, desc = "Expand snippet" },
+    { "<C-l>", function() luasnip.jump(1) end, desc = "Jump forward" },
+    { "<C-j>", function() luasnip.jump(-1) end, desc = "Jump backward" },
+    {
+      "<C-e>",
       function()
-        catppuccin.options.transparent_background = not catppuccin.options.transparent_background
-        catppuccin.compile()
-        vim.cmd.colorscheme(vim.g.colors_name)
+        if luasnip.choice_active() then luasnip.change_choice(1) end
       end,
-      "Toggle between transparent background",
+      desc = "Change the active choice",
     },
   },
-}, { prefix = "<leader>" })
+})
+
+-- AI assistant mappings
+wk.add({
+  { l .. "z", group = "copilot" },
+  {
+    mode = { "n", "v" },
+    { l .. "zz", "<cmd>CodeCompanionChat Toggle<CR>", desc = "Toggle chat" },
+    { l .. "ze", function() codecompanion.prompt("explain") end, desc = "Explain code" },
+    { l .. "zd", function() codecompanion.prompt("lsp") end, desc = "Explain diagnostics" },
+    { l .. "zf", function() codecompanion.prompt("fix") end, desc = "Fix code" },
+    { l .. "zt", function() codecompanion.prompt("tests") end, desc = "Generate tests" },
+    { l .. "zc", function() codecompanion.prompt("commit") end, desc = "Generate commit message" },
+    { l .. "za", "<cmd>CodeCompanionActions<CR>", desc = "Open actions menu" },
+  },
+})
+
+-- Session managment mappings
+wk.add({
+  { l .. "s", group = "session" },
+  { l .. "so", function() session_manager.load_session(true) end, desc = "Select and load session" },
+  { l .. "ss", function() session_manager.save_current_session() end, desc = "Save session for the current directory" },
+  { l .. "sl", function() session_manager.load_current_dir_session(true) end, desc = "Load session for the current directory" },
+  { l .. "sd", function() session_manager.delete_session() end, desc = "Select and delete session" },
+})
+
+-- Plugins manager mappings
+wk.add({
+  { l .. "l", group = "plugins" },
+  { l .. "ll", function() lazy.home() end, desc = "Got to plugins list" },
+  { l .. "lu", function() lazy.update() end, desc = "Update plugins" },
+})
+
+-- Theme mappings
+wk.add({
+  { l .. "t", group = "themes" },
+  {
+    l .. "tt",
+    function()
+      catppuccin.options.transparent_background = not catppuccin.options.transparent_background
+      catppuccin.compile()
+      vim.cmd.colorscheme(vim.g.colors_name)
+    end,
+    desc = "Toggle between transparent background",
+  },
+})
