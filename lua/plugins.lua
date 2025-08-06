@@ -292,15 +292,6 @@ vim.opt.foldenable = false
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
--- Lspconfig plugin
--- https://github.com/neovim/nvim-lspconfig
-local lspconfig = require("lspconfig")
-local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
 -- LuaSnip plugin
 -- https://github.com/L3MON4D3/LuaSnip
 -- https://github.com/rafamadriz/friendly-snippets
@@ -324,13 +315,24 @@ cmp.setup({
   }),
   sources = cmp.config.sources({ { name = "nvim_lsp" }, { name = "luasnip" } }),
 })
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-lspconfig.bashls.setup({ capabilities = capabilities })
-lspconfig.lua_ls.setup({ capabilities = capabilities })
-lspconfig.clangd.setup({ capabilities = capabilities })
-lspconfig.intelephense.setup({
-  capabilities = capabilities,
-  root_dir = function() return vim.fn.getcwd() end,
+local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+-- Lspconfig plugin
+-- https://github.com/neovim/nvim-lspconfig
+local lspconfig = require("lspconfig")
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+vim.lsp.enable({ "bashls", "lua_ls", "clangd", "intelephense", "zls" })
+vim.lsp.config("bashls", { capabilities = cmp_capabilities })
+vim.lsp.config("lua_ls", { capabilities = cmp_capabilities })
+vim.lsp.config("clangd", { capabilities = cmp_capabilities })
+vim.lsp.config("zls", { capabilities = cmp_capabilities })
+vim.lsp.config("intelephense", {
+  capabilities = cmp_capabilities,
+  root_dir = function(bufnr, on_dir) return on_dir(vim.fn.getcwd()) end,
   init_options = { globalStoragePath = "/tmp/intelephense", licenseKey = os.getenv("INTELEPHENSE_KEY") },
   settings = { intelephense = { files = { maxSize = 10000000 } } },
 })

@@ -113,3 +113,7 @@ nvim .config/nvim/.luarc.json
 - phpcs
 - phpcbf
 - intelephense
+
+**Zig**
+- zig
+- zls
