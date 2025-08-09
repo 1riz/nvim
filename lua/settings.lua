@@ -30,6 +30,24 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.sessionoptions = "buffers,curdir"
 vim.opt.mousemodel = "extend"
 
+-- GUI
+if vim.g.neovide then
+  vim.g.neovide_refresh_rate = 75
+  vim.opt.linespace = 4
+  vim.o.winblend = 10
+  vim.o.pumblend = 10
+  vim.g.neovide_text_gamma = 0.8
+  vim.g.neovide_text_contrast = 0.5
+  vim.g.neovide_hide_mouse_when_typing = true
+
+  vim.keymap.set("n", "<C-S-v>", '"+P')
+  vim.keymap.set("c", "<C-S-v>", "<C-R>+")
+  vim.keymap.set("i", "<C-S-v>", "<C-R>+")
+  -- vim.keymap.set("n", "<C-D>", '"+P')
+  -- vim.keymap.set("c", "<C-D>", "<C-R>+")
+  -- vim.keymap.set("i", "<C-D>", "<C-R>+")
+end
+
 -- Formatting
 vim.opt.wrap = false
 vim.opt.smartindent = true

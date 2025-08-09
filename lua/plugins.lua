@@ -221,6 +221,7 @@ telescope.setup({
       "--glob",
       "!**/.git/*",
     },
+    winblend = vim.o.winblend,
   },
   pickers = {
     find_files = {
