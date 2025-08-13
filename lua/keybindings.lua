@@ -2,7 +2,6 @@
 -- NVIM Key bindings
 --
 
-local catppuccin = require("catppuccin")
 local codecompanion = require("codecompanion")
 local dap = require("dap")
 local dap_widgets = require("dap.ui.widgets")
@@ -215,18 +214,4 @@ wk.add({
   { l .. "l", group = "plugins" },
   { l .. "ll", function() lazy.home() end, desc = "Got to plugins list" },
   { l .. "lu", function() lazy.update() end, desc = "Update plugins" },
-})
-
--- Theme mappings
-wk.add({
-  { l .. "t", group = "themes" },
-  {
-    l .. "tt",
-    function()
-      catppuccin.options.transparent_background = not catppuccin.options.transparent_background
-      catppuccin.compile()
-      vim.cmd.colorscheme(vim.g.colors_name)
-    end,
-    desc = "Toggle between transparent background",
-  },
 })

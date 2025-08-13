@@ -52,7 +52,7 @@ minimalist Neovim config (< 500 lines).
 
 ## Theme
 
-- https://github.com/catppuccin/nvim
+- https://github.com/projekt0n/github-nvim-theme
 
 ## Installation
 

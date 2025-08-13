@@ -8,7 +8,7 @@ vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 
 require("lazy").setup({
   spec = {
-    { "catppuccin/nvim", priority = 1000 },
+    { "projekt0n/github-nvim-theme", priority = 1000 },
     "nvim-tree/nvim-web-devicons",
     "nvim-tree/nvim-tree.lua",
     "nvim-lua/plenary.nvim",
@@ -56,21 +56,15 @@ require("lazy").setup({
   },
 })
 
--- Catppuccin theme
--- https://github.com/catppuccin/nvim
-require("catppuccin").setup({
-  flavour = "mocha",
-  transparent_background = false,
-  term_colors = true,
-  default_integrations = true,
-  integrations = {
-    harpoon = true,
-    nvim_surround = true,
-    lsp_trouble = true,
-    which_key = true,
+-- GitHub theme
+-- https://github.com/projekt0n/github-nvim-theme
+require("github-theme").setup({
+  options = {
+    transparent = false,
+    terminal_colors = true,
   },
 })
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("github_dark_default")
 
 -- Nvim-web-devicons plugin
 -- https://github.com/nvim-tree/nvim-web-devicons
@@ -106,7 +100,7 @@ local lualine_codecompanion = { sections = { lualine_a = { function() return [[O
 local lualine_trouble = { sections = { lualine_a = { function() return [[Diagnostics]] end } }, filetypes = { "trouble" } }
 lualine.setup({
   options = {
-    theme = "catppuccin",
+    theme = "auto",
     component_separators = { left = "", right = "|" },
     section_separators = { left = "", right = "" },
   },
