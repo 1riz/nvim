@@ -33,12 +33,15 @@ vim.opt.mousemodel = "extend"
 -- GUI
 if vim.g.neovide then
   vim.g.neovide_refresh_rate = 75
-  vim.opt.linespace = 4
-  vim.o.winblend = 10
-  vim.o.pumblend = 10
+  -- vim.g.neovide_refresh_rate = 60
   vim.g.neovide_text_gamma = 0.8
   vim.g.neovide_text_contrast = 0.5
   vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_remember_window_size = false
+  -- vim.g.neovide_remember_window_size = true
+  vim.o.winblend = 10
+  vim.o.pumblend = 10
+  vim.o.linespace = 4
 
   vim.keymap.set("n", "<C-S-v>", '"+P')
   vim.keymap.set("c", "<C-S-v>", "<C-R>+")
