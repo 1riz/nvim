@@ -1,0 +1,8 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: AlignWithSpaces
+BreakBeforeBraces: Linux
+AlignAfterOpenBracket: DontAlign
+BreakAfterReturnType: AllDefinitions
+ColumnLimit: 100

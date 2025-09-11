@@ -86,8 +86,9 @@ nvim .config/nvim/.luarc.json
 
 ### General
 
-- neovim
-- ripgrep
+- nvim
+- rg
+- fd
 
 ### Language specific (Optional)
 
@@ -98,15 +99,15 @@ nvim .config/nvim/.luarc.json
 
 **Bash**
 - bash
-- shellcheck
 - shfmt
+- shellcheck
 - bash-language-server
 
 **C**
 - gcc
 - gdb
-- astyle
 - clangd
+- clang-format
 
 **PHP**
 - php

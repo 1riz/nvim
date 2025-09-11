@@ -44,6 +44,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   pattern = { "*.c", "*.h" },
   callback = function()
     vim.opt.filetype = "c"
+    vim.opt.expandtab = false
     vim.opt.tabstop = 4
     vim.opt.shiftwidth = 4
   end,

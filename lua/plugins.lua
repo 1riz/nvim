@@ -385,8 +385,8 @@ null_ls.setup({
   sources = {
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.shfmt.with({ extra_args = { "-i", "2", "-ci", "-sr" } }),
-    null_ls.builtins.formatting.astyle.with({
-      extra_args = { "--options=" .. vim.fn.stdpath("config") .. "/.astylerc" },
+    null_ls.builtins.formatting.clang_format.with({
+      extra_args = { "--style=file:" .. vim.fn.stdpath("config") .. "/.clang-format" },
       filetypes = { "c" },
     }),
     null_ls.builtins.formatting.phpcbf.with({ extra_args = { "--standard=PSR12" } }),
