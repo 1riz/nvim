@@ -319,11 +319,10 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
-vim.lsp.enable({ "bashls", "lua_ls", "clangd", "intelephense", "zls" })
+vim.lsp.enable({ "bashls", "lua_ls", "clangd", "intelephense" })
 vim.lsp.config("bashls", { capabilities = cmp_capabilities })
 vim.lsp.config("lua_ls", { capabilities = cmp_capabilities })
 vim.lsp.config("clangd", { capabilities = cmp_capabilities })
-vim.lsp.config("zls", { capabilities = cmp_capabilities })
 vim.lsp.config("intelephense", {
   capabilities = cmp_capabilities,
   root_dir = function(bufnr, on_dir) return on_dir(vim.fn.getcwd()) end,
