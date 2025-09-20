@@ -18,7 +18,6 @@ minimalist Neovim config (< 500 lines).
 - https://github.com/nvim-telescope/telescope-ui-select.nvim
 - https://github.com/nvim-telescope/telescope-file-browser.nvim
 - https://github.com/nvim-telescope/telescope-frecency.nvim
-- https://github.com/nvim-telescope/telescope-fzf-native.nvim
 - https://github.com/1riz/telescope-macros.nvim
 - https://github.com/Shatur/neovim-session-manager
 - https://github.com/ahmedkhalf/project.nvim

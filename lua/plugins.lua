@@ -18,7 +18,6 @@ require("lazy").setup({
     "nvim-telescope/telescope-ui-select.nvim",
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-frecency.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "1riz/telescope-macros.nvim",
     { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
     "neovim/nvim-lspconfig",
@@ -60,7 +59,7 @@ require("lazy").setup({
 -- https://github.com/projekt0n/github-nvim-theme
 require("github-theme").setup({
   options = {
-    transparent = false,
+    transparent = true,
     terminal_colors = true,
   },
 })
@@ -191,7 +190,6 @@ require("harpoon").setup({
 -- https://github.com/nvim-telescope/telescope-ui-select.nvim
 -- https://github.com/nvim-telescope/telescope-file-browser.nvim
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
--- https://github.com/nvim-telescope/telescope-fzf-native.nvim
 local telescope = require("telescope")
 telescope.setup({
   defaults = {
@@ -232,7 +230,6 @@ telescope.setup({
     },
   },
 })
-telescope.load_extension("fzf")
 telescope.load_extension("ui-select")
 telescope.load_extension("file_browser")
 telescope.load_extension("frecency")
@@ -412,12 +409,14 @@ require("codecompanion").setup({
     inline = { adapter = "openai" },
   },
   adapters = {
-    openai = function()
-      return require("codecompanion.adapters").extend("openai", {
-        env = { api_key = os.getenv("OPENAI_API_KEY") },
-        schema = { model = { default = "gpt-4.1" } },
-      })
-    end,
+    http = {
+      openai = function()
+        return require("codecompanion.adapters").extend("openai", {
+          env = { api_key = os.getenv("OPENAI_API_KEY") },
+          schema = { model = { default = "gpt-4.1" } },
+        })
+      end,
+    },
   },
   display = {
     chat = {
