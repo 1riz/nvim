@@ -32,6 +32,7 @@ require("lazy").setup({
     "mfussenegger/nvim-dap",
     "theHamsta/nvim-dap-virtual-text",
     "nvimtools/none-ls.nvim",
+    "gbprod/none-ls-shellcheck.nvim",
     "folke/trouble.nvim",
     "olimorris/codecompanion.nvim",
     "lewis6991/gitsigns.nvim",
@@ -212,7 +213,7 @@ telescope.load_extension("yank_history")
 -- https://github.com/nvim-treesitter/nvim-treesitter
 -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 require("nvim-treesitter.configs").setup({
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "yaml", "php", "bash" },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "yaml", "bash" },
   sync_install = false,
   auto_install = false,
   highlight = {
@@ -286,16 +287,8 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
-vim.lsp.enable({ "bashls", "lua_ls", "clangd", "intelephense" })
-vim.lsp.config("bashls", { capabilities = cmp_capabilities })
-vim.lsp.config("lua_ls", { capabilities = cmp_capabilities })
+vim.lsp.enable("clangd")
 vim.lsp.config("clangd", { capabilities = cmp_capabilities })
-vim.lsp.config("intelephense", {
-  capabilities = cmp_capabilities,
-  root_dir = function(bufnr, on_dir) return on_dir(vim.fn.getcwd()) end,
-  init_options = { globalStoragePath = "/tmp/intelephense", licenseKey = os.getenv("INTELEPHENSE_KEY") },
-  settings = { intelephense = { files = { maxSize = 10000000 } } },
-})
 
 -- Autopairs plugin
 -- https://github.com/windwp/nvim-autopairs
@@ -347,6 +340,7 @@ require("nvim-dap-virtual-text").setup({
 
 -- None-ls plugin
 -- https://github.com/nvimtools/none-ls.nvim
+-- https://github.com/gbprod/none-ls-shellcheck.nvim
 local null_ls = require("null-ls")
 null_ls.setup({
   sources = {
@@ -356,8 +350,7 @@ null_ls.setup({
       extra_args = { "--style=file:" .. vim.fn.stdpath("config") .. "/.clang-format" },
       filetypes = { "c" },
     }),
-    null_ls.builtins.formatting.phpcbf.with({ extra_args = { "--standard=PSR12" } }),
-    null_ls.builtins.diagnostics.phpcs.with({ extra_args = { "--standard=PSR12" } }),
+    require("none-ls-shellcheck.diagnostics"),
   },
 })
 

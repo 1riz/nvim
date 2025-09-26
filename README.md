@@ -51,19 +51,19 @@ minimalist Neovim config (< 500 lines).
 
 1) Remove current NVIM configuration and plugins
 
-```bash
+```sh
 ./scripts/nvim-reset.lua
 ```
 
 2) Install this repository and the Lazy plugin manager
 
-```bash
+```sh
 ./scripts/install.lua
 ```
 
 3) Execute NVIM to finish the installation
 
-```bash
+```sh
 nvim
 ```
 
@@ -71,7 +71,7 @@ nvim
 
 1) Update `.luarc.json` file  with your "$VIMRUNTIME"
 
-```bash
+```sh
 nvim .config/nvim/.luarc.json
 ```
 
@@ -83,27 +83,19 @@ nvim .config/nvim/.luarc.json
 - rg
 - fd
 
-### Language specific (Optional)
+### Language specific
 
 **Lua**
 - lua
 - stylua
-- lua-language-server
 
-**Bash**
-- bash
+**Shell**
+- sh
 - shfmt
 - shellcheck
-- bash-language-server
 
 **C**
 - clang
 - lldb
 - clangd
 - clang-format
-
-**PHP**
-- php
-- phpcs
-- phpcbf
-- intelephense
