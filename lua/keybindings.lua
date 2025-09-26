@@ -6,12 +6,9 @@ local codecompanion = require("codecompanion")
 local dap = require("dap")
 local dap_widgets = require("dap.ui.widgets")
 local gitsigns = require("gitsigns")
-local harpoon_mark = require("harpoon.mark")
-local harpoon_ui = require("harpoon.ui")
 local lazy = require("lazy")
 local luasnip = require("luasnip")
 local ntree = require("nvim-tree.api")
-local session_manager = require("session_manager")
 local spectre = require("spectre")
 local substitute = require("substitute")
 local substitute_exchange = require("substitute.exchange")
@@ -49,23 +46,17 @@ wk.add({
   { "<M-r>", "<cmd>set relativenumber!<cr>", desc = "Toggle relative line numbers" },
   { "<M-b>", "<cmd>set showtabline=2<cr>", desc = "Show tabline" },
   { "<S-M-b>", "<cmd>set showtabline=0<cr>", desc = "Hide tabline" },
-  { "<M-i>", "<cmd>IBLToggle<cr>", desc = "Toggle indentation guides" },
-  { "<S-M-i>", "<cmd>IBLToggleScope<cr>", desc = "Toggle scope guides" },
   { l .. l, "<cmd>WhichKey<cr>", desc = "Show all key bindings" },
 })
 
 -- Generic mappings using <space>
 wk.add({
   { s .. "o", function() telescope.extensions.frecency.frecency() end, desc = "Open recent files" },
-  { s .. "e", function() telescope.extensions.file_browser.file_browser() end, desc = "File browser" },
   { s .. "p", function() telescope.extensions.projects.projects({ layout_config = { height = 0.50 } }) end, desc = "Project browser" },
   { s .. "b", function() telescope_builtin.buffers() end, desc = "List open buffers" },
   { s .. "f", function() telescope_builtin.find_files() end, desc = "Find files" },
-  { s .. "s", function() session_manager.load_session(true) end, desc = "List saved sessions" },
   { s .. "y", function() telescope.extensions.yank_history.yank_history() end, desc = "Show yank history" },
-  { s .. "m", function() telescope.extensions.macros.macros() end, desc = "Show saved macros" },
   { s .. "g", function() telescope_builtin.live_grep() end, desc = "Search string in files" },
-  { s .. "h", function() telescope.extensions.harpoon.marks() end, desc = "Show currents marks" },
   { s .. "t", function() telescope_builtin.help_tags() end, desc = "Show help tags" },
   { s .. "d", function() ntree.tree.toggle() end, desc = "Explore directories" },
   { s .. s, function() telescope_builtin.builtin() end, desc = "Show all pickers" },
@@ -160,14 +151,6 @@ wk.add({
   { l .. "rf", function() spectre.open_file_search({ select_word = true }) end, desc = "Search on current file" },
 })
 
--- Navigation mappings
-wk.add({
-  { "<M-m>", function() harpoon_mark.add_file() end, desc = "Mark file" },
-  { "<M-h>", function() harpoon_ui.toggle_quick_menu() end, desc = "View all project marks" },
-  { "<M-Right>", function() harpoon_ui.nav_next() end, desc = "Navigates to next mark" },
-  { "<M-Left>", function() harpoon_ui.nav_prev() end, desc = "Navigates to previous mark" },
-})
-
 -- Snippets mappings
 wk.add({
   {
@@ -198,15 +181,6 @@ wk.add({
     { l .. "zc", function() codecompanion.prompt("commit") end, desc = "Generate commit message" },
     { l .. "za", "<cmd>CodeCompanionActions<CR>", desc = "Open actions menu" },
   },
-})
-
--- Session managment mappings
-wk.add({
-  { l .. "s", group = "session" },
-  { l .. "so", function() session_manager.load_session(true) end, desc = "Select and load session" },
-  { l .. "ss", function() session_manager.save_current_session() end, desc = "Save session for the current directory" },
-  { l .. "sl", function() session_manager.load_current_dir_session(true) end, desc = "Load session for the current directory" },
-  { l .. "sd", function() session_manager.delete_session() end, desc = "Select and delete session" },
 })
 
 -- Plugins manager mappings

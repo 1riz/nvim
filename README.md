@@ -16,16 +16,11 @@ minimalist Neovim config (< 500 lines).
 - https://github.com/nvim-tree/nvim-web-devicons
 - https://github.com/nvim-telescope/telescope.nvim
 - https://github.com/nvim-telescope/telescope-ui-select.nvim
-- https://github.com/nvim-telescope/telescope-file-browser.nvim
 - https://github.com/nvim-telescope/telescope-frecency.nvim
-- https://github.com/1riz/telescope-macros.nvim
-- https://github.com/Shatur/neovim-session-manager
 - https://github.com/ahmedkhalf/project.nvim
-- https://github.com/ThePrimeagen/harpoon
 - https://github.com/gbprod/yanky.nvim
 - https://github.com/gbprod/substitute.nvim
 - https://github.com/nvim-pack/nvim-spectre
-- https://github.com/sitiom/nvim-numbertoggle
 - https://github.com/famiu/bufdelete.nvim
 - https://github.com/nvimdev/hlsearch.nvim
 - https://github.com/goolord/alpha-nvim
@@ -46,7 +41,6 @@ minimalist Neovim config (< 500 lines).
 - https://github.com/kylechui/nvim-surround
 - https://github.com/numToStr/Comment.nvim
 - https://github.com/lewis6991/gitsigns.nvim
-- https://github.com/lukas-reineke/indent-blankline.nvim
 - https://github.com/MeanderingProgrammer/render-markdown.nvim
 
 ## Theme

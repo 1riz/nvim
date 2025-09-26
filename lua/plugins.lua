@@ -16,9 +16,7 @@ require("lazy").setup({
     { "akinsho/bufferline.nvim", version = "*" },
     "folke/which-key.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
-    "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-frecency.nvim",
-    "1riz/telescope-macros.nvim",
     { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
     "neovim/nvim-lspconfig",
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -37,17 +35,13 @@ require("lazy").setup({
     "folke/trouble.nvim",
     "olimorris/codecompanion.nvim",
     "lewis6991/gitsigns.nvim",
-    { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
-    "sitiom/nvim-numbertoggle",
     "famiu/bufdelete.nvim",
     "nvimdev/hlsearch.nvim",
-    "Shatur/neovim-session-manager",
     "ahmedkhalf/project.nvim",
     "goolord/alpha-nvim",
     "gbprod/yanky.nvim",
     "gbprod/substitute.nvim",
     "nvim-pack/nvim-spectre",
-    "ThePrimeagen/harpoon",
     "MeanderingProgrammer/render-markdown.nvim",
   },
   rocks = {
@@ -127,6 +121,8 @@ bufferline.setup({
     always_show_bufferline = false,
     close_command = "Bdelete! %d",
     right_mouse_command = "Bdelete! %d",
+    show_buffer_close_icons = false,
+    show_close_icon = false,
     indicator = {
       style = "none",
     },
@@ -139,14 +135,6 @@ bufferline.setup({
       },
     },
   },
-})
-
--- SessionManager plugin
--- https://github.com/Shatur/neovim-session-manager
-local session_manager_config = require("session_manager.config")
-require("session_manager").setup({
-  autoload_mode = session_manager_config.AutoloadMode.Disabled,
-  autosave_last_session = false,
 })
 
 -- Project plugin
@@ -177,18 +165,9 @@ require("substitute").setup({
   },
 })
 
--- Harpoon plugin
--- https://github.com/ThePrimeagen/harpoon
-require("harpoon").setup({
-  global_settings = {
-    save_on_toggle = true,
-  },
-})
-
 -- Telescope plugin
 -- https://github.com/nvim-telescope/telescope.nvim
 -- https://github.com/nvim-telescope/telescope-ui-select.nvim
--- https://github.com/nvim-telescope/telescope-file-browser.nvim
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
 local telescope = require("telescope")
 telescope.setup({
@@ -223,20 +202,11 @@ telescope.setup({
       layout_config = { height = 0.25, width = 0.75 },
     },
   },
-  extensions = {
-    ["file_browser"] = {
-      theme = "ivy",
-      hijack_netrw = true,
-    },
-  },
 })
 telescope.load_extension("ui-select")
-telescope.load_extension("file_browser")
 telescope.load_extension("frecency")
 telescope.load_extension("projects")
 telescope.load_extension("yank_history")
-telescope.load_extension("harpoon")
-telescope.load_extension("macros")
 
 -- Treesitter plugin
 -- https://github.com/nvim-treesitter/nvim-treesitter
@@ -431,16 +401,6 @@ require("codecompanion").setup({
 -- https://github.com/lewis6991/gitsigns.nvim
 require("gitsigns").setup()
 
--- IndentBlankline plugin
--- https://github.com/lukas-reineke/indent-blankline.nvim
-require("ibl").setup({
-  enabled = false,
-  scope = { show_start = false, show_end = false },
-})
-
--- Numbertoggle plugin
--- https://github.com/sitiom/nvim-numbertoggle
-
 -- Bufdelete plugin
 -- https://github.com/famiu/bufdelete.nvim
 
@@ -482,7 +442,6 @@ alpha_theme.section.top_buttons.val = {
   alpha_theme.button("n", "  New file", "<cmd>enew<cr>"),
   alpha_theme.button("f", "󰈞  Find files", "<cmd>Telescope find_files<cr>"),
   alpha_theme.button("p", "  Open project", "<cmd>Telescope projects<cr>"),
-  alpha_theme.button("s", "  Load saved session", "<cmd>SessionManager! load_session<cr>"),
 }
 alpha_theme.section.bottom_buttons.val = {
   alpha_theme.button("q", "󰿅  Exit", "<cmd>qa<cr>"),

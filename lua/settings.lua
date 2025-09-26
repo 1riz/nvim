@@ -18,6 +18,7 @@ vim.opt.showtabline = 0
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.number = true
+vim.opt.relativenumber = false
 vim.opt.list = true
 vim.opt.listchars = "tab:▸ ,trail:▫"
 vim.opt.scrolloff = 1
