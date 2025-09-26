@@ -103,8 +103,8 @@ nvim .config/nvim/.luarc.json
 - bash-language-server
 
 **C**
-- gcc
-- gdb
+- clang
+- lldb
 - clangd
 - clang-format
 

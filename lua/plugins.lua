@@ -346,15 +346,15 @@ require("Comment").setup()
 -- Nvim-dap plugin
 -- https://github.com/mfussenegger/nvim-dap
 local dap = require("dap")
-dap.adapters.gdb = {
+dap.adapters.lldb = {
   type = "executable",
-  command = "gdb",
-  args = { "-i", "dap" },
+  command = "lldb-dap-19",
+  name = "lldb",
 }
 dap.configurations.c = {
   {
-    name = "GDB Local session",
-    type = "gdb",
+    name = "LLDB Local session",
+    type = "lldb",
     request = "launch",
     program = function() return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file") end,
     cwd = "${workspaceFolder}",
