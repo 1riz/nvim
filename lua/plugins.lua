@@ -54,7 +54,7 @@ require("lazy").setup({
 -- https://github.com/projekt0n/github-nvim-theme
 require("github-theme").setup({
   options = {
-    transparent = true,
+    transparent = false,
     terminal_colors = true,
   },
 })

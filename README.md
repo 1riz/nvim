@@ -3,7 +3,7 @@
 [![GitHub Workflow](https://github.com/1riz/nvim/actions/workflows/main.yml/badge.svg)](https://github.com/1riz/nvim/actions/workflows/main.yml)
 [![Dotyfile Profile](https://dotfyle.com/1riz/nvim/badges/plugins?style=flat)](https://dotfyle.com/1riz/nvim)
 
-minimalist Neovim config (< 500 lines).
+minimalist Neovim config (< 700 lines).
 
 ![Demo](./demo.png)
 
@@ -52,13 +52,13 @@ minimalist Neovim config (< 500 lines).
 1) Remove current NVIM configuration and plugins
 
 ```sh
-./scripts/nvim-reset.lua
+./scripts/nvim-reset.sh
 ```
 
 2) Install this repository and the Lazy plugin manager
 
 ```sh
-./scripts/install.lua
+./scripts/install.sh
 ```
 
 3) Execute NVIM to finish the installation
