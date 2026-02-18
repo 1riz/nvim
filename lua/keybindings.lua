@@ -30,7 +30,7 @@ local l = "<leader>"
 
 -- Generic mappings
 wk.add({
-  { "<C-Del>", "<cmd>Bdelete<cr>", desc = "Delete current buffer" },
+  { "<C-H>", "<cmd>Bdelete<cr>", desc = "Delete current buffer" },
   { "<C-PageDown>", "<cmd>bn<cr>", desc = "Go to next buffer" },
   { "<C-PageUp>", "<cmd>bp<cr>", desc = "Go to previous buffer" },
   { "<C-Left>", "<C-w>h", desc = "Go to left window" },
@@ -39,9 +39,10 @@ wk.add({
   { "<C-Right>", "<C-w>l", desc = "Go to right window" },
   { "<C-s>", "<cmd>wa<cr>", desc = "Write all changed buffers" },
   { "<C-q>", "<cmd>qa<cr>", desc = "Exit Neovim" },
+  { "<C-M-q>", "<cmd>q<cr>", desc = "Quit current window" },
   { "<C-n>", "<cmd>new<cr>", desc = "New horizontal window" },
   { "<C-l>", "<cmd>vnew<cr>", desc = "New vertical window" },
-  { "<C-Enter>", "<cmd>terminal<cr>", desc = "New terminal" },
+  { "<M-Enter>", "<cmd>terminal<cr>", desc = "New terminal" },
   { "<C-a>", "ggVG", desc = "Select all current buffer" },
   { "<M-r>", "<cmd>set relativenumber!<cr>", desc = "Toggle relative line numbers" },
   { "<M-b>", "<cmd>set showtabline=2<cr>", desc = "Show tabline" },
@@ -77,7 +78,7 @@ wk.add({
 })
 
 wk.add({
-  { "<C-h>", function() vim.lsp.buf.hover() end, desc = "Display symbol information" },
+  { "<M-h>", function() vim.lsp.buf.hover() end, desc = "Display symbol information" },
 })
 
 wk.add({

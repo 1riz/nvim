@@ -311,7 +311,7 @@ require("Comment").setup()
 local dap = require("dap")
 dap.adapters.lldb = {
   type = "executable",
-  command = "lldb-dap-19",
+  command = "lldb-dap-21",
   name = "lldb",
 }
 dap.configurations.c = {

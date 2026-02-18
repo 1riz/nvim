@@ -54,6 +54,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   pattern = { "*.s", "*.asm" },
   callback = function()
     vim.opt.filetype = "asm"
+    vim.opt.expandtab = false
     vim.opt.tabstop = 8
     vim.opt.shiftwidth = 8
   end,
