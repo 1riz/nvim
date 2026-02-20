@@ -30,13 +30,16 @@ local l = "<leader>"
 
 -- Generic mappings
 wk.add({
-  { "<C-H>", "<cmd>Bdelete<cr>", desc = "Delete current buffer" },
+  { "<C-Del>", "<cmd>Bdelete<cr>", desc = "Delete current buffer" },
+  { "<C-Backspace>", "<cmd>Bdelete<cr>", desc = "Delete current buffer" },
   { "<C-PageDown>", "<cmd>bn<cr>", desc = "Go to next buffer" },
   { "<C-PageUp>", "<cmd>bp<cr>", desc = "Go to previous buffer" },
-  { "<C-Left>", "<C-w>h", desc = "Go to left window" },
-  { "<C-Down>", "<C-w>j", desc = "Go to lower window" },
-  { "<C-Up>", "<C-w>k", desc = "Go to upper window" },
-  { "<C-Right>", "<C-w>l", desc = "Go to right window" },
+  { "<C-M-Right>", "<cmd>bn<cr>", desc = "Go to next buffer" },
+  { "<C-M-Left>", "<cmd>bp<cr>", desc = "Go to previous buffer" },
+  { "<C-S-Left>", "<C-w>h", desc = "Go to left window" },
+  { "<C-S-Down>", "<C-w>j", desc = "Go to lower window" },
+  { "<C-S-Up>", "<C-w>k", desc = "Go to upper window" },
+  { "<C-S-Right>", "<C-w>l", desc = "Go to right window" },
   { "<C-s>", "<cmd>wa<cr>", desc = "Write all changed buffers" },
   { "<C-q>", "<cmd>qa<cr>", desc = "Exit Neovim" },
   { "<C-M-q>", "<cmd>q<cr>", desc = "Quit current window" },

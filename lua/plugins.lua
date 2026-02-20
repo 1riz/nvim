@@ -19,7 +19,7 @@ require("lazy").setup({
     "nvim-telescope/telescope-frecency.nvim",
     { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
     "neovim/nvim-lspconfig",
-    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+    { "nvim-treesitter/nvim-treesitter", branch = "master", build = ":TSUpdate" },
     "nvim-treesitter/nvim-treesitter-textobjects",
     "rafamadriz/friendly-snippets",
     { "L3MON4D3/LuaSnip", version = "v2.*" },

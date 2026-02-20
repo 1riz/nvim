@@ -1,5 +1,5 @@
 {
   "runtime.version": "LuaJIT",
-  "workspace.library": ["/usr/local/share/nvim/runtime"],
+  "workspace.library": ["/opt/homebrew/share/nvim/runtime"],
   "workspace.checkThirdParty": false
 }
