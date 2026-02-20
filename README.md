@@ -88,14 +88,22 @@ nvim .config/nvim/.luarc.json
 **Lua**
 - lua
 - stylua
+- lua-language-server
 
 **Shell**
 - sh
 - shfmt
 - shellcheck
+- bash-language-server
 
 **C**
 - clang
 - lldb
 - clangd
 - clang-format
+
+**PHP**
+- php
+- phpcs
+- phpcbf
+- intelephense

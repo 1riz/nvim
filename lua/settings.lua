@@ -59,6 +59,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
     vim.opt.shiftwidth = 8
   end,
 })
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = { "*.php" },
+  callback = function()
+    vim.opt.filetype = "php"
+    vim.opt.tabstop = 4
+    vim.opt.shiftwidth = 4
+  end,
+})
 
 -- Key Mappings
 vim.g.mapleader = ","
