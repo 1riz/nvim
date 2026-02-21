@@ -289,7 +289,10 @@ end
 vim.lsp.enable({ "bashls", "lua_ls", "clangd", "intelephense" })
 vim.lsp.config("bashls", { capabilities = cmp_capabilities })
 vim.lsp.config("lua_ls", { capabilities = cmp_capabilities })
-vim.lsp.config("clangd", { capabilities = cmp_capabilities })
+vim.lsp.config("clangd", {
+  capabilities = cmp_capabilities,
+  cmd = { "/opt/homebrew/opt/llvm/bin/clangd" },
+})
 vim.lsp.config("intelephense", {
   capabilities = cmp_capabilities,
   root_dir = function(bufnr, on_dir) return on_dir(vim.fn.getcwd()) end,
@@ -318,7 +321,7 @@ require("Comment").setup()
 local dap = require("dap")
 dap.adapters.lldb = {
   type = "executable",
-  command = "lldb",
+  command = "/opt/homebrew/opt/llvm/bin/lldb",
   name = "lldb",
 }
 dap.configurations.c = {
@@ -353,6 +356,7 @@ null_ls.setup({
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.shfmt.with({ extra_args = { "-i", "2", "-ci", "-sr" } }),
     null_ls.builtins.formatting.clang_format.with({
+      command = "/opt/homebrew/opt/llvm/bin/clang-format",
       extra_args = { "--style=file:" .. vim.fn.stdpath("config") .. "/.clang-format" },
       filetypes = { "c" },
     }),
